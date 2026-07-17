@@ -1,0 +1,294 @@
+/* DialogueBox.css - Visual Novel Style RPG Dialogue */
+
+/* Fullpage Dialogue Stage Reset */
+.quest-page.dialogue-stage {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+  background-image: url("../assets/dialogue-bg.jpeg") !important; /* Your JPEG historical background */
+  background-size: cover !important;
+  background-position: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+/* Darken gradient overlay to make text highly readable */
+.quest-page.dialogue-stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.75) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* vn-saint-left: Speaker Portrait Cutout (placed on the left side) */
+.vn-saint-left {
+  position: absolute;
+  bottom: 0;
+  left: 6%;
+  height: 82vh;
+  width: auto;
+  z-index: 2;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.9));
+}
+
+/* vn-bubble-center: Dialogue Parchment Box (centered, wide rectangle) */
+.vn-bubble-center {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 68%;
+  max-width: 780px;
+  min-height: 160px;
+  padding: 28px 30px 20px 30px;
+  background: rgba(18, 13, 10, 0.95);
+  border: 2px solid var(--gold-medium);
+  box-shadow: 
+    0 0 0 3px var(--bg-dark), 
+    0 10px 30px rgba(0, 0, 0, 0.9), 
+    inset 0 0 30px rgba(0, 0, 0, 0.85);
+  border-radius: 4px;
+  z-index: 3;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* vn-name-tag: Speaker Tag (top-left of bubble box) */
+.vn-name-tag {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(168, 132, 52, 0.5);
+  background: linear-gradient(180deg, rgba(80, 15, 15, 0.95) 0%, rgba(45, 8, 8, 0.95) 100%);
+  color: var(--gold-light);
+  padding: 4px 18px;
+  font-size: 11px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* vn-text: Speech script */
+.vn-text {
+  color: var(--text-parchment);
+  font-size: 14.5px;
+  line-height: 1.6;
+  font-family: 'Outfit', sans-serif;
+  margin: 0 0 16px 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* vn-next-btn: Next / Continue button */
+.vn-next-btn {
+  background: var(--red-btn-normal);
+  border: 1.5px solid var(--gold-medium);
+  color: #fff4d0;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 8px 24px;
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5), inset 0 0 8px rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  align-self: center;
+  margin-top: auto;
+  outline: none;
+}
+
+.vn-next-btn:hover {
+  background: var(--red-btn-hover);
+  border-color: var(--gold-light);
+  box-shadow: 0 0 10px rgba(153, 18, 18, 0.5), 0 4px 10px rgba(0,0,0,0.6);
+  transform: scale(1.03);
+}
+
+.vn-next-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+/* Back button override for Dialogue page */
+.quest-page.dialogue-stage .back-btn {
+  z-index: 10;
+}
+
+/* ========================================================
+   Transitions & Keyframe Animations (Visible vs Hidden)
+   ======================================================== */
+
+.vn-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.vn-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+}
+
+/* Animate portrait on entry */
+img.vn-saint-left.vn-visible {
+  animation: portrait-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25) both;
+}
+
+/* Animate dialogue bubble on entry (preserving horizontal centering) */
+div.vn-bubble-center.vn-visible {
+  animation: bubble-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15) both;
+}
+
+@keyframes portrait-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 15px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+/* Responsive alignment for smaller viewports */
+@media (max-width: 900px) {
+  .quest-page.dialogue-stage {
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    padding: 20px !important;
+  }
+  
+  .vn-saint-left {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    height: 40vh;
+    margin-bottom: -15px;
+  }
+  
+  .vn-bubble-center {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    max-width: 500px;
+    min-height: auto;
+    margin-bottom: 20px;
+  }
+  
+  @keyframes bubble-pop {
+    0% {
+      opacity: 0;
+      transform: translateY(15px) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+.quest-page {
+  background-image: url("../assets/dialogue-bg.jpeg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+.dialogue-fullpage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 4, 2, 0.55); /* dark overlay so text readable */
+}
+
+.dialogue-fullpage > * {
+  position: relative;
+  z-index: 1;
+}
+/* Dialogue box ni screen center lo pettడానికి */
+.vn-bubble-center {
+  left: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, 0) !important;
+  width: 76% !important;
+  max-width: 760px !important;
+  bottom: 5% !important; /* Move box down closer to bottom edge */
+}
+
+/* Center pop animation trigger */
+div.vn-bubble-center.vn-visible {
+  animation: bubble-pop-centered 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15) both !important;
+}
+
+/* Animation keyframes for centered bubble */
+@keyframes bubble-pop-centered {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 15px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+/* కేవలం Player అవతార్ ని మాత్రమే కొంచెం కుడి వైపుకు జరపడానికి */
+img.vn-saint-left[alt="Player"] {
+  left: 14% !important; /* Shifted right from 6% to 14% */
+}
+/* Dialogue box ni slightly transparent (82% opacity) cheyడానికి */
+.vn-bubble-center {
+  background: rgba(5, 10, 10, 0.70) !important;
+  backdrop-filter: blur(4px) !important; /* Optional: adds a premium glass-blur effect behind the box */
+}
+
+/* Owl portrait ni matrame konchem right side ki jarapadaniki */
+img.vn-saint-left[alt="Owl"] {
+  left: 8% !important; /* Shifted from 6% to 10% */
+}
+
+/* Dialogue box ni screen kinda edge ki move cheyడానికి */
+/* Village page lo unna Saint dialogue box mathrame down ki velladaniki */
+.vn-scene .vn-bubble-center {
+  bottom: 10% !important; /* Only shifts on the village scene */
+}
+/* Dialogue box ni screen center lo pettడానికి */
+.vn-bubble-center {
+  left: 40% !important;
+  right: auto !important;
+  transform: translate(-50%, 0) !important;
+  width: 76% !important;
+  max-width: 760px !important;
+  bottom: 2% !important; /* Move box down closer to bottom edge */
+}

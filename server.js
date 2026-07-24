@@ -20,6 +20,8 @@ const petRoutes = require('./src/routes/petRoutes');
 app.use('/api/pets', petRoutes);
 const profileRoutes = require('./src/routes/profileRoutes');
 app.use('/api/profile', profileRoutes);
+const chronicleRoutes = require('./src/routes/chronicleRoutes');
+app.use('/api/chronicle', chronicleRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {

@@ -1,0 +1,924 @@
+/* ============================================
+   GLOBAL RESET & THEME VARIABLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+:root {
+  --bg-dark: #0d0e1a;
+  --panel: #1a1d2e;
+  --gold: #d4af6a;
+  --gold-dim: #8a7245;
+  --parchment: #e8dcc0;
+  --hp-red: #a23e3e;
+  --success: #4a7c59;
+}
+
+/* ============================================
+   GENERIC PAGE CONTAINERS (non-fullpage)
+   ============================================ */
+.village-page, .quest-page, .quiz-page, .boss-battle, .reward-screen {
+  max-width: 750px;
+  margin: 50px auto;
+  padding: 35px;
+  text-align: center;
+  color: var(--parchment);
+  font-family: 'EB Garamond', serif;
+}
+
+.village-page h1, .quest-page h2, .quiz-page h2, .boss-battle h2, .reward-screen h2 {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+/* ============================================
+   ORNATE PANEL — signature element
+   (dialogue box, learning content, pet offer, project brief)
+   ============================================ */
+.dialogue-box, .learning-content, .pet-offer, .project-brief {
+  background: var(--panel);
+  border: 1px solid var(--gold-dim);
+  border-radius: 4px;
+  padding: 22px;
+  position: relative;
+  text-align: left;
+}
+
+.dialogue-box::before, .learning-content::before,
+.pet-offer::before, .project-brief::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 14px; height: 14px;
+  border-top: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+}
+
+.dialogue-box::after, .learning-content::after,
+.pet-offer::after, .project-brief::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 14px; height: 14px;
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+button {
+  font-family: 'Cinzel', serif;
+  background: linear-gradient(180deg, #d4af6a, #a8843f);
+  color: #1a1208;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+button:hover { filter: brightness(1.1); }
+button:disabled { background: #444; color: #888; cursor: not-allowed; }
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.options button.selected, .pet-offer button.selected {
+  background: linear-gradient(180deg, #4a7c59, #2e5939);
+  color: #fff;
+}
+
+.back-btn {
+  background: transparent;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  padding: 6px 16px;
+  margin-bottom: 18px;
+  font-size: 0.8rem;
+}
+
+/* ============================================
+   QUEST PAGE EXTRAS — progress tag, subtopics, lesson image
+   ============================================ */
+.progress-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.lesson-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.subtopic {
+  margin: 10px 0;
+  border-top: 1px solid #333;
+  padding-top: 10px;
+}
+
+.subtopic-toggle {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  padding: 0;
+  text-align: left;
+}
+
+.subtopic-content {
+  margin-top: 8px;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   BOSS BATTLE — HP bars
+   ============================================ */
+.hp-bars {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  margin: 20px 0;
+  color: var(--parchment);
+}
+
+/* ============================================
+   WORLD MAP — full page, image background
+   ============================================ */
+.world-map-fullpage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 100vh;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.status-bar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px 0;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(13,14,26,0.85) 0%, transparent 100%);
+  z-index: 10;
+}
+
+.status-bar-overlay h1 {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.status-bar {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--gold);
+  flex-wrap: wrap;
+}
+
+.hero-tag { color: #f4d35e; }
+
+.map-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 5;
+}
+
+.map-node:hover { transform: translate(-50%, -50%) scale(1.15); }
+.map-node.locked { cursor: not-allowed; opacity: 0.55; }
+
+.node-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 106, 0.9));
+}
+
+.node-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: var(--gold);
+  background: rgba(13, 14, 26, 0.85);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-top: 5px;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+}
+
+.node-check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 1rem;
+}
+
+/* ============================================
+   PATH SELECT — full page, image background, gate-style cards
+   ============================================ */
+.path-select-fullpage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.path-select-overlay {
+  width: 100%;
+  max-width: 1300px;
+  text-align: center;
+}
+
+.path-select-overlay h1 {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 0 16px rgba(212, 175, 106, 0.6), 0 3px 10px rgba(0,0,0,0.9);
+  margin-bottom: 18px;
+}
+
+.path-select-overlay h1::before,
+.path-select-overlay h1::after {
+  content: "✦";
+  color: var(--gold-dim);
+  font-size: 0.9rem;
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.path-card {
+  height: 150px;
+  background: linear-gradient(160deg, rgba(40, 35, 25, 0.92), rgba(20, 18, 14, 0.95));
+  border: 1px solid var(--gold-dim);
+  border-radius: 30% 30% 4px 4px / 14% 14% 4px 4px;
+  padding: 12px 8px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.path-card::before, .path-card::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--gold-dim);
+}
+
+.path-card::before { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+.path-card::after { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+.path-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 24px rgba(212, 175, 106, 0.25), inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.path-card:hover::before, .path-card:hover::after { border-color: var(--gold); }
+
+.path-icon {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 0 6px rgba(212, 175, 106, 0.6));
+}
+
+.path-card h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.path-card p {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.6rem;
+  color: #b8b0a0;
+  line-height: 1.2;
+}
+
+/* ============================================
+   RESPONSIVE — tablet & phone landscape
+   ============================================ */
+@media (max-width: 1100px) {
+  .path-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .node-icon { font-size: 1.7rem; }
+  .node-label { font-size: 0.65rem; padding: 2px 7px; }
+}
+
+@media (max-width: 740px) {
+  .node-icon { font-size: 1.3rem; }
+  .node-label { font-size: 0.55rem; padding: 2px 5px; }
+  .status-bar-overlay h1 { font-size: 1.3rem; }
+  .status-bar { font-size: 0.8rem; gap: 12px; }
+  .path-select-overlay h1 { font-size: 1.3rem; }
+  .path-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+/* ============================================
+   VILLAGE — full page, image background
+   ============================================ */
+.village-fullpage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  padding: 2vh 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-evenly;
+}
+
+.village-settings-wrapper {
+  position: absolute;
+  top: 24px;
+  right: 40px;
+  z-index: 100;
+  display: inline-block;
+}
+
+.village-settings-btn {
+  background: linear-gradient(180deg, rgba(80, 15, 15, 0.95) 0%, rgba(45, 8, 8, 0.95) 100%);
+  border: 1.5px solid var(--gold-dark);
+  color: var(--gold-light);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 0 4px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.village-settings-btn:hover {
+  background: linear-gradient(180deg, rgba(110, 20, 20, 0.95) 0%, rgba(65, 10, 10, 0.95) 100%);
+  border-color: var(--gold-medium);
+  box-shadow: 0 0 12px var(--gold-shadow);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.village-settings-dropdown {
+  position: absolute;
+  top: 105%;
+  right: 0;
+  background: rgba(18, 14, 11, 0.96);
+  border: 2px solid var(--gold-medium);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.85), inset 0 0 15px rgba(0,0,0,0.9);
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+  box-sizing: border-box;
+  animation: dropdown-fade-in 0.18s ease-out;
+}
+
+@keyframes dropdown-fade-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item-btn {
+  background: transparent;
+  border: none;
+  color: var(--parchment);
+  font-family: 'Cinzel', serif;
+  font-size: 10.5px;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+
+.dropdown-item-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold-light);
+  text-shadow: 0 0 5px var(--gold-shadow);
+}
+
+.dropdown-item-btn.logout {
+  color: #f1948a;
+  border-top: 1px dashed rgba(212,175,55,0.15);
+  padding-top: 10px;
+  margin-top: 4px;
+  border-radius: 0 0 3px 3px;
+}
+
+.dropdown-item-btn.logout:hover {
+  background: rgba(192, 57, 43, 0.25);
+  color: #ff9f9f;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.questoria-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  align-self: center;
+  color: var(--gold);
+  text-shadow: 0 0 16px rgba(125, 87, 16, 0.5), 0 3px 10px rgba(217, 74, 74, 0.9);
+  margin: 0;
+}
+
+.village-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 1.5vw, 1.1rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  align-self: center;
+  color: #dfb76d;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  margin: 4px 0 0;
+  border-bottom: 2px solid rgba(212, 175, 106, 0.5);
+}
+
+.rules-box {
+  background: rgba(20, 18, 14, 0.92);
+  border: 2px solid var(--gold-dim);
+  align-self: center;
+  border-radius: 10px;
+  padding: 1.5vh 30px;
+  max-width: 480px;
+  width: 100%;
+}
+
+.rules-title {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: clamp(1.2rem, 1.8vw, 0.95rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 1vh;
+}
+
+.rules-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: var(--gold-dim);
+  margin: 5px auto 0;
+}
+
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 0.6vh;
+}
+
+.rule-icon { font-size: 0.85rem; flex-shrink: 0; }
+
+.rule-item p {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(0.70rem, 1.3vw, 0.85rem);
+  color: var(--parchment);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.rules-footer {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-top: 0.8vh;
+  padding-top: 0.6vh;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* ===== Sage Dialogue Box — horizontal rectangle, saint pops on left ===== */
+.vn-scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start; /* saint+bubble box ippudu LEFT side ki vellutundi */
+  margin-left: 4vw;
+  width: 100%;
+  max-width: 300px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.vn-visible { opacity: 1; transform: translateX(0); }
+.vn-hidden { opacity: 0; transform: translateX(-12px); }
+
+.vn-character-wrap {
+  flex-shrink: 0;
+  width: clamp(70px, 10vw, 110px);
+  height: clamp(100px, 16vh, 150px);
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.vn-character {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
+}
+
+.vn-bubble {
+  position: relative;
+  background: linear-gradient(160deg, rgba(30, 26, 20, 0.96), rgba(15, 13, 10, 0.98));
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  padding: 1.5vh 20px;
+  flex: 1;
+  margin-left: -8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+.vn-bubble::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 13px solid var(--gold-dim);
+}
+
+.vn-name-tag {
+  display: inline-block;
+  background: linear-gradient(160deg, #2a241a, #14110c);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 2px 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.6vh;
+}
+
+.vn-text {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(0.75rem, 1.6vw, 0.92rem);
+  color: var(--parchment);
+  margin: 0 0 1vh;
+  line-height: 1.35;
+}
+
+.vn-next-btn {
+  font-size: 0.72rem;
+  padding: 4px 14px;
+}
+
+/* ===== Mobile: stack vertically if too tight ===== */
+@media (max-width: 600px) {
+  .village-fullpage { padding: 1.5vh 12px; }
+  .rules-box { padding: 1vh 16px; }
+  .vn-scene { max-width: 100%; }
+  .vn-character-wrap { width: 60px; height: 85px; }
+  .vn-bubble { padding: 1vh 14px; }
+  .vn-scene {
+    align-self: center;
+    margin-left: 0;
+  }
+}
+
+
+/* SAINT — fixed left side of screen */
+.vn-saint-left {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 85vh;
+  max-width: 35vw;
+  object-fit: contain;
+  object-position: bottom left;
+  z-index: 5;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+/* SAGE BOX — centered horizontal rectangle */
+.vn-bubble-center {
+  position: relative;
+  z-index: 6;
+  background: linear-gradient(160deg, rgba(30, 26, 20, 0.96), rgba(15, 13, 10, 0.98));
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  padding: 18px 36px;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  transition: opacity 0.2s, transform 0.2s;
+  bottom:1%;
+}
+
+.vn-visible { opacity: 1; transform: translateY(0); }
+.vn-hidden { opacity: 0; transform: translateY(12px); }
+
+.vn-name-tag {
+  display: inline-block;
+  background: linear-gradient(160deg, #2a241a, #14110c);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 3px 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.vn-text {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  color: var(--parchment);
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.vn-next-btn {
+  font-size: 0.78rem;
+  padding: 5px 18px;
+}
+
+@media (max-width: 740px) {
+  .vn-saint-left { max-width: 45vw; height: 60vh; }
+  .vn-bubble-center { padding: 14px 20px; }
+}
+
+/*navigation buttons for village page*/
+
+.quick-nav {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 50;
+}
+
+.quick-nav-btn {
+  background: rgba(20, 18, 14, 0.85);
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.quick-nav-btn:hover {
+  border-color: var(--gold);
+}
+
+@media (max-width: 740px) {
+  .quick-nav { top: 8px; right: 8px; }
+  .quick-nav-btn { font-size: 0.6rem; padding: 4px 8px; }
+}
+/* ============================================
+   MAP AVATAR — floating hero icon
+   ============================================ */
+.map-avatar {
+  position: absolute;
+  width: 90px;
+  height: 140px;
+  object-fit: contain;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 0 10px rgba(212, 175, 106, 0.8));
+  z-index: 8;
+  transition: top 1.2s ease-in-out, left 1.4s ease-in-out;
+  animation: avatar-idle 1.5s ease-in-out infinite;
+}
+
+@keyframes avatar-idle {
+  0%, 100% { transform: translate(-50%, -100%) translateY(0); }
+  50% { transform: translate(-50%, -100%) translateY(-4px); }
+}
+
+/* ============================================
+   BOSS BATTLE — arena layout, fighter cards
+   ============================================ */
+
+.boss-arena {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 30px;
+  margin: 24px 0;
+}
+
+.fighter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 130px;
+}
+
+.fighter-hp-bar {
+  width: 100%;
+  height: 10px;
+  background: #2a2a2a;
+  border: 1px solid var(--gold-dim);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.hp-fill {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.player-hp { background: linear-gradient(90deg, var(--success), #6fae7d); }
+.boss-hp-fill { background: linear-gradient(90deg, var(--hp-red), #d35454); }
+
+.fighter-img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+}
+
+.fighter-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.vs-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--hp-red);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(162, 62, 62, 0.8);
+}
+
+.boss-question {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 740px) {
+  .boss-arena { gap: 14px; }
+  .fighter { width: 90px; }
+  .fighter-img { height: 100px; }
+}
+
+.fighter-hit {
+  animation: hit-flash 0.5s ease;
+}
+
+@keyframes hit-flash {
+  0% { transform: translateX(0); filter: brightness(1) drop-shadow(0 4px 12px rgba(0,0,0,0.6)); }
+  20% { transform: translateX(-8px); filter: brightness(2) drop-shadow(0 0 20px rgba(255,80,80,0.9)); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  100% { transform: translateX(0); filter: brightness(1) drop-shadow(0 4px 12px rgba(0,0,0,0.6)); }
+}
+
+.map-avatar {
+  pointer-events: none; /* 👈 ఈ line add చేయ్ */
+}
+
+/* Conflicting boss styles cleaned */
+
+/* ========================================================
+   Global Player HUD Widget Styles
+   ======================================================== */
+
+.player-hud-widget {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.hud-stat-item {
+  background: rgba(18, 13, 10, 0.95);
+  border: 1.5px solid #d4af37;
+  border-radius: 4px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 0 5px rgba(0,0,0,0.5);
+  pointer-events: auto;
+}
+
+.hud-stat-item.xp {
+  border-color: #00bfff;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.25), inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.hud-stat-item.coins {
+  border-color: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.25), inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.hud-icon {
+  font-size: 15px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.hud-val {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: #fff4d0;
+}
+
+/* End of stylesheet */

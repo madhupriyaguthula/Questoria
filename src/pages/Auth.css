@@ -1,0 +1,551 @@
+/* src/pages/Auth.css */
+/* QUESTORIA — Login / Sign Up Page
+   Matches reference: dark castle bg, gold ornate card, centered form */
+
+/* ══════════════════════════════════════════════════
+   PAGE WRAPPER
+══════════════════════════════════════════════════ */
+
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════
+   BACKGROUND IMAGE
+══════════════════════════════════════════════════ */
+
+.auth-bg {
+  position: fixed;          /* fixed so it doesn't scroll on long signup form */
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* Scale up slightly so the dark edges don't show */
+  transform: scale(1.04);
+}
+
+/* Multi-layer dark vignette — matches reference's moody dark feel */
+.auth-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 70% 100% at 50% 50%, rgba(5,3,12,0.30) 0%, rgba(5,3,12,0.60) 100%),
+    linear-gradient(to bottom, rgba(5,3,12,0.40) 0%, rgba(5,3,12,0.20) 40%, rgba(5,3,12,0.50) 100%);
+}
+
+/* ══════════════════════════════════════════════════
+   TOP-LEFT LOGO BUTTON
+   (matches reference — logo top-left, clickable back to landing)
+══════════════════════════════════════════════════ */
+
+.auth-corner-logo {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.6rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.auth-corner-crown {
+  font-size: 1.1rem;
+  color: var(--gold);
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(201,168,76,0.6));
+}
+
+.auth-corner-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════
+   CARD
+   The centered ornate panel — golden bordered box
+══════════════════════════════════════════════════ */
+
+.auth-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem 2.2rem 1.6rem;
+
+  /* Dark semi-transparent panel — same as reference */
+  background: rgba(8, 5, 18, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* The signature golden ornate double border */
+  border: 1px solid rgba(201, 168, 76, 0.55);
+  box-shadow:
+    0 0 0 3px rgba(8, 5, 18, 0.9),
+    0 0 0 4px rgba(201, 168, 76, 0.25),
+    0 0 60px rgba(0, 0, 0, 0.8),
+    0 0 120px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(201, 168, 76, 0.12);
+
+  border-radius: 2px;
+
+  /* Animate in */
+  animation: card-appear 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes card-appear {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ══════════════════════════════════════════════════
+   ORNATE RULE (top and bottom decorative line)
+══════════════════════════════════════════════════ */
+
+.auth-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.auth-rule:last-of-type {
+  margin-bottom: 0;
+  margin-top: 1.2rem;
+}
+
+.auth-rule span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.5), transparent);
+}
+
+.auth-rule em {
+  font-style: normal;
+  color: var(--gold);
+  font-size: 0.6rem;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   CARD HEADER
+══════════════════════════════════════════════════ */
+
+.auth-card__head {
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.auth-card__crown {
+  display: block;
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.5));
+  animation: crown-pulse 3s ease-in-out infinite;
+}
+
+@keyframes crown-pulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(201,168,76,0.4)); }
+  50%       { filter: drop-shadow(0 0 16px rgba(201,168,76,0.8)); }
+}
+
+.auth-card__brand {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  /* Gold gradient text — matches reference */
+  background: linear-gradient(160deg, #f5e070 0%, #c9a84c 35%, #f0d870 65%, #a07428 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.4rem;
+  line-height: 1.1;
+}
+
+.auth-card__sub {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.6);
+}
+
+/* ══════════════════════════════════════════════════
+   FORM
+══════════════════════════════════════════════════ */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Input field row ── */
+.auth-field {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 3px;
+  padding: 0 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.auth-field:focus-within {
+  border-color: rgba(201, 168, 76, 0.65);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+}
+
+.auth-field__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: rgba(201, 168, 76, 0.55);
+  margin-right: 0.6rem;
+}
+
+.auth-field__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0.7rem 0;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.97rem;
+  color: var(--parchment);
+  width: 100%;
+}
+
+.auth-input::placeholder {
+  color: rgba(232, 213, 163, 0.3);
+  font-style: italic;
+}
+
+/* Autofill override — browsers apply a blue/yellow bg by default */
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px rgba(8, 5, 18, 0.95) inset !important;
+  -webkit-text-fill-color: var(--parchment) !important;
+  caret-color: var(--parchment);
+}
+
+.auth-field__right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Eye toggle button */
+.auth-eye {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: rgba(201, 168, 76, 0.45);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.auth-eye:hover { color: var(--gold); }
+
+.auth-eye svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ── Remember me row ── */
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -0.1rem;
+}
+
+.auth-remember {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem;
+  color: rgba(232, 213, 163, 0.55);
+}
+
+.auth-remember input[type="checkbox"] {
+  accent-color: var(--gold);
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+}
+
+/* ── Terms checkbox ── */
+.auth-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem;
+  color: rgba(232, 213, 163, 0.55);
+  line-height: 1.4;
+}
+
+.auth-terms input[type="checkbox"] {
+  accent-color: var(--gold);
+  width: 13px;
+  height: 13px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ── Generic link / text button ── */
+.auth-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Crimson Text', serif;
+  font-size: inherit;
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.auth-link:hover { color: var(--goldb); }
+
+/* ── Error / Success messages ── */
+.auth-msg {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.88rem;
+  border-radius: 3px;
+  padding: 0.55rem 0.8rem;
+  animation: msg-in 0.3s ease;
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.auth-msg--err {
+  color: #f08080;
+  background: rgba(200, 50, 50, 0.12);
+  border: 1px solid rgba(200, 50, 50, 0.3);
+}
+
+.auth-msg--ok {
+  color: #80d4a0;
+  background: rgba(50, 180, 100, 0.12);
+  border: 1px solid rgba(50, 180, 100, 0.3);
+}
+
+/* ══════════════════════════════════════════════════
+   SUBMIT BUTTON — Gold bar matching reference exactly
+══════════════════════════════════════════════════ */
+
+.auth-submit {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  padding: 0.85rem 1rem;
+  margin-top: 0.3rem;
+  cursor: pointer;
+
+  /* The solid golden background from the reference */
+  background: linear-gradient(
+    135deg,
+    #b8892a 0%,
+    #e0b84a 30%,
+    #c9a03a 55%,
+    #a07020 80%,
+    #c9a03a 100%
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(201, 168, 76, 0.4),
+    0 4px 20px rgba(150, 100, 20, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow:
+    0 0 0 1px rgba(240, 208, 80, 0.7),
+    0 6px 28px rgba(200, 140, 30, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.auth-submit:active:not(:disabled) {
+  transform: translateY(0);
+  transition-duration: 0.08s;
+}
+
+.auth-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Shine sweep on hover */
+.auth-submit__shine {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  pointer-events: none;
+  transition: left 0.5s ease;
+}
+
+.auth-submit:hover .auth-submit__shine { left: 160%; }
+
+.auth-submit__label {
+  position: relative;
+  z-index: 1;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1a0e00;               /* dark text on gold bg — matches reference */
+}
+
+/* Loading spinner appended after label text */
+.auth-submit--busy .auth-submit__label::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(26, 14, 0, 0.3);
+  border-top-color: #1a0e00;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 0.6rem;
+  vertical-align: middle;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ══════════════════════════════════════════════════
+   OR CONTINUE WITH divider
+══════════════════════════════════════════════════ */
+
+.auth-or {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.1rem 0 0.8rem;
+}
+
+.auth-or span {
+  flex: 1;
+  height: 1px;
+  background: rgba(201, 168, 76, 0.18);
+}
+
+.auth-or__txt {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.35);
+  white-space: nowrap;
+  flex: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   SOCIAL BUTTONS  (G  Discord  GitHub)
+══════════════════════════════════════════════════ */
+
+.auth-socials {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+}
+
+.auth-social {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.auth-social:hover {
+  border-color: rgba(201, 168, 76, 0.55);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* ══════════════════════════════════════════════════
+   SWITCH LINK  ("Don't have an account? Sign Up")
+══════════════════════════════════════════════════ */
+
+.auth-switch {
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.9rem;
+  color: rgba(232, 213, 163, 0.45);
+  margin-bottom: 0.8rem;
+}
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.6rem 1.4rem 1.3rem;
+    margin: 0.5rem;
+  }
+
+  .auth-card__brand { font-size: 1.3rem; }
+
+  .auth-socials { gap: 0.6rem; }
+
+  .auth-social {
+    width: 42px;
+    height: 42px;
+  }
+}

@@ -1,0 +1,60 @@
+/* src/index.css */
+/* ─────────────────────────────────────────────────────────
+   QUESTORIA — Global Styles
+   Loaded once in main.jsx, applies to every page.
+───────────────────────────────────────────────────────── */
+
+/* RPG Fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ── Hard reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── Design tokens (reusable across all pages) ── */
+:root {
+  --void:           #0a0a0f;   /* near-black base */
+  --dusk:           #1a0e2e;   /* deep purple */
+  --gold:           #c9a84c;   /* antique gold */
+  --gold-bright:    #f0d060;   /* highlight gold */
+  --parchment:      #e8d5a3;   /* warm off-white text */
+  --violet:         #6b3fa0;   /* arcane accent */
+  --violet-dim:     rgba(107, 63, 160, 0.4);
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--void);
+  color: var(--parchment);
+  font-family: 'Crimson Text', Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Accessibility: respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  overflow-x: hidden;
+  width: 100%;
+}

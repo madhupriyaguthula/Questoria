@@ -1,0 +1,288 @@
+/* RewardScreen.css - RPG Victory & Claim Reward animations */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@400;600;700&display=swap');
+
+.reward-screen-fullpage {
+  font-family: 'Outfit', sans-serif;
+  color: #e8dcc0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.reward-screen-fullpage::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.8) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.reward-layout-box {
+  position: relative;
+  z-index: 2;
+  background: rgba(18, 13, 10, 0.96);
+  border: 2px solid var(--gold-medium);
+  box-shadow: 
+    0 0 0 4px #0a0806,
+    0 20px 50px rgba(0,0,0,0.95),
+    inset 0 0 40px rgba(0,0,0,0.9);
+  border-radius: 12px;
+  width: min(700px, 92%);
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 520px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Header Text Styles */
+.reward-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 900;
+  background: var(--text-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.9));
+  margin: 0 0 10px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.reward-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+/* Stage 1: The Chest Box */
+.chest-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: auto;
+}
+
+.rpg-chest-graphic {
+  font-size: 80px;
+  animation: chest-idle 2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.7));
+  cursor: pointer;
+  user-select: none;
+}
+
+.rpg-chest-graphic.opening {
+  animation: chest-shake-open 0.6s ease both;
+}
+
+@keyframes chest-idle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes chest-shake-open {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.1) rotate(-6deg); }
+  40% { transform: scale(1.1) rotate(6deg); }
+  60% { transform: scale(1.1) rotate(-6deg); }
+  80% { transform: scale(1.2) rotate(3deg); }
+  100% { transform: scale(1.3) rotate(0); filter: brightness(1.5) drop-shadow(0 0 25px rgba(212,175,55,0.8)); }
+}
+
+/* Stage 2: Celebration Countdown */
+.celebration-timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: auto;
+}
+
+.celebration-glow-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--gold-bright);
+  animation: pulse-glow 1s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(1.15); opacity: 1; }
+}
+
+/* Confetti particles */
+.confetti-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.85;
+}
+
+/* Stage 3: Cards Claim Grid */
+.rewards-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.reward-box-card {
+  background: rgba(10, 8, 6, 0.85);
+  border: 1.5px solid rgba(212,175,55,0.2);
+  border-radius: 8px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 170px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+.reward-box-card.revealed {
+  animation: card-pop-entry 0.4s ease both;
+}
+
+@keyframes card-pop-entry {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.reward-box-card.claimed {
+  border-color: #27ae60;
+  box-shadow: 0 0 15px rgba(39, 174, 96, 0.3), inset 0 0 10px rgba(0,0,0,0.6);
+  background: rgba(12, 25, 15, 0.9);
+}
+
+.reward-card-icon {
+  font-size: 36px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  margin-bottom: 10px;
+}
+
+.reward-card-value {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  margin-bottom: 4px;
+}
+
+.reward-card-label {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.reward-claim-mini-btn {
+  background: linear-gradient(180deg, #d4af37 0%, #8a6a24 100%);
+  border: 1px solid var(--gold-light);
+  color: #1a1208;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 4px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.reward-claim-mini-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+.reward-claim-mini-btn.claimed-state {
+  background: #27ae60 !important;
+  color: #ffffff !important;
+  border-color: #58d68d !important;
+  cursor: default;
+  transform: none;
+}
+
+/* Pet Choice Styling */
+.reward-pet-selection-card {
+  background: rgba(15, 12, 10, 0.95);
+  border: 1.5px solid var(--gold-medium);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pet-selection-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pet-option-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  padding: 6px 16px;
+  cursor: pointer;
+}
+
+/* Continue Main Button */
+.reward-continue-btn {
+  background: var(--red-btn-normal);
+  border: 2px solid var(--gold-medium);
+  color: #fff4d0;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 10px 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 
+    0 0 0 3px #0c0806,
+    0 6px 12px rgba(0,0,0,0.6);
+  transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+  text-transform: uppercase;
+}
+
+.reward-continue-btn:hover:not(:disabled) {
+  background: var(--red-btn-hover);
+  border-color: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 0 0 3px #0c0806,
+    0 0 10px rgba(153, 18, 18, 0.5),
+    0 6px 15px rgba(0,0,0,0.8);
+}
+
+.reward-continue-btn:disabled {
+  background: #2a221a;
+  border-color: #4a3c2f;
+  color: #705b4a;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

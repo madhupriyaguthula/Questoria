@@ -7,6 +7,9 @@ import './Auth.css';
 
 import authBg from '../assets/auth-bg.png';
 
+// ── Render API Base URL Configuration ────────────────────
+const API_BASE_URL = "https://questoria-1.onrender.com";
+
 // ── Inline SVG icons ─────────────────────────────────────
 const IcoUser = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>);
 const IcoAt   = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>);
@@ -36,7 +39,7 @@ function Field({ icon, name, type, placeholder, value, onChange, autoComplete, r
 }
 
 // ── Main Component ────────────────────────────────────────
-function Auth({ startMode }) {
+function Auth({ startMode, setUsername }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -46,7 +49,7 @@ function Auth({ startMode }) {
     return 'signup';
   };
 
-  const [mode,    setMode]    = useState(initMode);
+  const [mode,     setMode]     = useState(initMode);
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState('');
   const [success, setSuccess] = useState('');
@@ -81,13 +84,13 @@ function Auth({ startMode }) {
     setError(''); setSuccess('');
 
     if (mode === 'signup') {
-      if (!form.name.trim())                           { setError('Enter your full name.');          return; }
-      if (!form.username.trim())                       { setError('Choose a hero username.');         return; }
+      if (!form.name.trim())                  { setError('Enter your full name.');          return; }
+      if (!form.username.trim())              { setError('Choose a hero username.');        return; }
       if (!form.email.trim() || !form.email.includes('@')) { setError('Enter a valid email.');       return; }
-      if (!form.phone.trim())                          { setError('Enter your phone number.');        return; }
-      if (form.password.length < 6)                    { setError('Password needs at least 6 chars.');return; }
-      if (form.password !== form.confirmPassword)      { setError('Passwords do not match.');         return; }
-      if (!agreed)                                     { setError('Agree to Terms & Conditions.');    return; }
+      if (!form.phone.trim())                 { setError('Enter your phone number.');       return; }
+      if (form.password.length < 6)           { setError('Password needs at least 6 chars.');return; }
+      if (form.password !== form.confirmPassword)     { setError('Passwords do not match.');         return; }
+      if (!agreed)                            { setError('Agree to Terms & Conditions.');    return; }
     } else {
       if (!form.username.trim()) { setError('Enter your username.'); return; }
       if (!form.password.trim()) { setError('Enter your password.'); return; }
@@ -95,25 +98,49 @@ function Auth({ startMode }) {
 
     setLoading(true);
 
-    await new Promise(r => setTimeout(r, 1300));
-    setLoading(false);
+    try {
+      // Direct call to Render Backend API
+      const endpoint = mode === 'signup' ? '/api/auth/register' : '/api/auth/login';
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
 
-    // Save session data to local storage
-    const userPayload = {
-      name: form.name || form.username,
-      username: form.username,
-      email: form.email,
-      isAuthenticated: true
-    };
-    localStorage.setItem('questoria_user', JSON.stringify(userPayload));
+      const data = await response.json();
 
-    // Redirect to matching routes
-    if (mode === 'signup') {
-      setSuccess('Legend created! Entering the kingdom…');
-      setTimeout(() => navigate('/avatar-selection'), 1600);
-    } else {
-      setSuccess('Welcome back, hero! Entering the kingdom…');
-      setTimeout(() => navigate('/avatar-selection'), 1400);
+      if (!response.ok) {
+        throw new Error(data.message || 'Authentication failed on server.');
+      }
+
+      // Save user details
+      const userPayload = {
+        name: data.user?.name || form.name || form.username,
+        username: data.user?.username || form.username,
+        email: data.user?.email || form.email,
+        token: data.token || null,
+        isAuthenticated: true
+      };
+      localStorage.setItem('questoria_user', JSON.stringify(userPayload));
+
+      if (setUsername) {
+        setUsername(userPayload.username);
+      }
+
+      setLoading(false);
+
+      if (mode === 'signup') {
+        setSuccess('Legend created! Entering the kingdom…');
+        setTimeout(() => navigate('/avatar-selection'), 1600);
+      } else {
+        setSuccess('Welcome back, hero! Entering the kingdom…');
+        setTimeout(() => navigate('/avatar-selection'), 1400);
+      }
+
+    } catch (err) {
+      setLoading(false);
+      // Fallback mechanism if backend fails / sleep mode
+      setError(err.message || 'Server connection error. Please try again.');
     }
   }
 

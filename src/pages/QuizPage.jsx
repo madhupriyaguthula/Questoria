@@ -2,10 +2,23 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { worlds } from "../data/questData";
 import questDetailsBg from "../assets/quest-details-bg.png";
-import avatarHero from "../assets/avatar-hero.png"; // Imports player portrait
+import avatarHero from "../assets/avatar-hero.png"; 
+import charFemale from "../assets/char-female.png";
+import charMale from "../assets/char-male.png";
 import "./QuizPage.css"; // Imports the high-fidelity quiz styling
 
-function QuizPage() {
+const PORTRAITS = {
+  "female": charFemale,
+  "male": charMale,
+  "char-female.png": charFemale,
+  "char-male.png": charMale,
+  "avatar-hero.png": avatarHero,
+};
+
+function QuizPage({ avatar: avatarProp }) {
+  const savedAvatar = localStorage.getItem("avatar") ? JSON.parse(localStorage.getItem("avatar")) : "female";
+  const avatarKey = avatarProp || savedAvatar || "female";
+  const currentAvatarImg = PORTRAITS[avatarKey] || (typeof avatarKey === "string" && avatarKey.startsWith("data:") ? avatarKey : charFemale);
   const { worldId } = useParams();
   const navigate = useNavigate();
   const world = worlds.find((w) => w.id === parseInt(worldId));
@@ -138,7 +151,7 @@ function QuizPage() {
 
   const renderCharacterArena = () => (
     <div className="quiz-character-arena">
-      <img src={avatarHero} alt="Your hero" className="quiz-hero-sprite" />
+      <img src={currentAvatarImg} alt="Your hero" className="quiz-hero-sprite" />
       <div className="quiz-pedestal"></div>
     </div>
   );

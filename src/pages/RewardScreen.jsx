@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { worlds } from "../data/questData";
 import treasureVaultBg from "../assets/treasure_vault_bg.png";
+import CertificateModal from "../components/CertificateModal";
 import "./RewardScreen.css"; // Imports victory animations
 
 // Pre-defined list of random particle attributes for decoration
@@ -28,6 +29,7 @@ function RewardScreen({ markWorldComplete, addRewards, setHasCertificate, addToI
   const [opening, setOpening] = useState(false);
   const [celebrationCount, setCelebrationCount] = useState(5);
   const [claimedList, setClaimedList] = useState([]);
+  const [showCert, setShowCert] = useState(false);
 
   // Local HUD stats counters
   const [currentTotalXP, setCurrentTotalXP] = useState(() => {
@@ -144,6 +146,7 @@ function RewardScreen({ markWorldComplete, addRewards, setHasCertificate, addToI
       addToInventory(item.rawVal);
     } else if (item.id === "certificate") {
       setHasCertificate(true);
+      setShowCert(true);
     }
 
     setClaimedList((prev) => [...prev, item.id]);
@@ -283,10 +286,35 @@ function RewardScreen({ markWorldComplete, addRewards, setHasCertificate, addToI
             >
               CONTINUE TO WORLD MAP
             </button>
+
+            {isBoss && (
+              <button 
+                className="reward-continue-btn"
+                style={{ 
+                  background: "linear-gradient(180deg, #ffd700 0%, #b8860b 100%)", 
+                  color: "#1a0f00", 
+                  marginTop: "12px", 
+                  border: "2px solid #ffe3a0",
+                  fontWeight: "800"
+                }}
+                onClick={() => setShowCert(true)}
+              >
+                📜 VIEW VINTAGE CERTIFICATE OF MASTERY
+              </button>
+            )}
           </>
         )}
 
       </div>
+
+      {showCert && (
+        <CertificateModal
+          onClose={() => setShowCert(false)}
+          pathName={world?.title || "HTML & Web Mastery"}
+          xp={currentTotalXP}
+          coins={currentTotalCoins}
+        />
+      )}
     </div>
   );
 }

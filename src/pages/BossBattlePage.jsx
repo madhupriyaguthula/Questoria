@@ -2,11 +2,48 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { worlds, damageMap } from "../data/questData";
 import avatarHero from "../assets/avatar-hero.png";
+import charFemale from "../assets/char-female.png";
+import charMale from "../assets/char-male.png";
+import petWolf from "../assets/pet-wolf.png";
+import petDragon from "../assets/pet-dragon.png";
 import bossMonster from "../assets/boss-monster.png";
 import bossArenaBg from "../assets/boss-arena-bg.png";
 import "./BossBattlePage.css"; // Imports the high-fidelity boss battle arena styling
 
-function BossBattlePage() {
+const PORTRAITS = {
+  "female": charFemale,
+  "male": charMale,
+  "char-female.png": charFemale,
+  "char-male.png": charMale,
+  "avatar-hero.png": avatarHero,
+};
+
+const PETS = {
+  "female": petWolf,
+  "male": petDragon,
+  "char-female.png": petWolf,
+  "char-male.png": petDragon,
+};
+
+const HERO_TITLES = {
+  "female": { title: "THE SEEKER", subtitle: "Village Keeper & Wolf Companion" },
+  "male": { title: "THE WANDERER", subtitle: "Village Traveler & Dragon Companion" },
+};
+
+function BossBattlePage({ avatar: avatarProp }) {
+  const savedAvatar = localStorage.getItem("avatar") ? JSON.parse(localStorage.getItem("avatar")) : "female";
+  const savedPet = localStorage.getItem("questoria_pet");
+  
+  const avatarKey = avatarProp || savedAvatar || "female";
+  const currentAvatarImg = PORTRAITS[avatarKey] || (typeof avatarKey === "string" && avatarKey.startsWith("data:") ? avatarKey : charFemale);
+  
+  // Resolve pet companion
+  let currentPetImg = PETS[avatarKey] || petWolf;
+  if (savedPet === "dragon") currentPetImg = petDragon;
+  if (savedPet === "wolf") currentPetImg = petWolf;
+
+  const heroMeta = HERO_TITLES[avatarKey] || { title: "HERO", subtitle: "The Legendary Warrior" };
+
   const { worldId } = useParams();
   const navigate = useNavigate();
   const world = worlds.find((w) => w.id === parseInt(worldId));
@@ -57,19 +94,31 @@ function BossBattlePage() {
         </div>
 
         <div className="boss-arena-wide">
-          {/* Left Side: Player Hero */}
+          {/* Left Side: Player Hero & Companion Duo */}
           <div className="fighter-side fighter-left">
             <div className="fighter-hp-bar">
               <div className="hp-fill player-hp" style={{ width: `${playerHP}%` }}></div>
             </div>
-            <img 
-              src={avatarHero} 
-              alt="You" 
-              className={`fighter-img-lg ${hitTarget === "player" ? "fighter-hit" : ""}`} 
-            />
+            
+            <div className={`hero-duo-stage ${hitTarget === "player" ? "fighter-hit" : ""}`}>
+              <img 
+                src={currentAvatarImg} 
+                alt="Hero" 
+                className="duo-hero-img" 
+              />
+              {currentPetImg && (
+                <img 
+                  src={currentPetImg} 
+                  alt="Companion" 
+                  className="duo-pet-img" 
+                />
+              )}
+              <div className="duo-pedestal-glow"></div>
+            </div>
+
             <div className="fighter-badge-card">
-              <span className="badge-title">YOU</span>
-              <span className="badge-subtitle">The Warrior</span>
+              <span className="badge-title">{heroMeta.title}</span>
+              <span className="badge-subtitle">{heroMeta.subtitle}</span>
             </div>
           </div>
 

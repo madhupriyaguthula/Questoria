@@ -1,13 +1,32 @@
 import { useState } from "react";
 import saintPortrait from "../assets/saint-portrait.png";
 import owlPortrait from "../assets/owl-portrait.png";
-import playerPortrait from "../assets/avatar-hero.png"; // imports the hero avatar
+import avatarHero from "../assets/avatar-hero.png";
+import charFemale from "../assets/char-female.png";
+import charMale from "../assets/char-male.png";
 import "./DialogueBox.css"; // imports transition styles
 
-const portraits = { Saint: saintPortrait, Owl: owlPortrait, Player: playerPortrait };
-const speakerTags = { Saint: "The Sage", Owl: "The Owl", Player: "You" };
+const PORTRAITS = {
+  "female": charFemale,
+  "male": charMale,
+  "char-female.png": charFemale,
+  "char-male.png": charMale,
+  "avatar-hero.png": avatarHero,
+};
 
-function DialogueBox({ dialogue, onComplete, buttonLabel = "Next" }) {
+const speakerTags = { Saint: "The Sage", Owl: "The Owl", Player: "You", You: "You" };
+
+function DialogueBox({ dialogue, onComplete, buttonLabel = "Next", avatar: avatarProp }) {
+  const savedAvatar = localStorage.getItem("avatar") ? JSON.parse(localStorage.getItem("avatar")) : "female";
+  const avatarKey = avatarProp || savedAvatar || "female";
+  const playerAvatarImg = PORTRAITS[avatarKey] || (typeof avatarKey === "string" && avatarKey.startsWith("data:") ? avatarKey : charFemale);
+
+  const portraits = { 
+    Saint: saintPortrait, 
+    Owl: owlPortrait, 
+    Player: playerAvatarImg, 
+    You: playerAvatarImg 
+  };
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 

@@ -6,9 +6,15 @@ import QuickNav from "../components/QuickNav";
 import avatarHero from "../assets/avatar-hero.png";
 import heroPortrait from "../assets/hero.png";
 import saintPortrait from "../assets/saint-portrait.png";
+import charFemale from "../assets/char-female.png";
+import charMale from "../assets/char-male.png";
 import "./WorldMap.css"; // Imports character sheet popup styles
 
 const PORTRAITS = {
+  "female": charFemale,
+  "male": charMale,
+  "char-female.png": charFemale,
+  "char-male.png": charMale,
   "avatar-hero.png": avatarHero,
   "hero.png": heroPortrait,
   "saint-portrait.png": saintPortrait
@@ -141,9 +147,10 @@ function WorldMap({ completedWorlds, selectedPath, totalXP, totalCoins, heroTitl
           ? Math.min(Math.max(...completedWorlds) + 1, 7)
           : 1;
         const avatarPos = nodePositions[currentWorldId] || { top: "50%", left: "50%" };
+        const mapAvatarSrc = PORTRAITS[avatar] || (typeof avatar === "string" && avatar.startsWith("data:") ? avatar : charFemale);
         return (
           <img
-            src={PORTRAITS[avatar] || avatarHero}
+            src={mapAvatarSrc}
             alt="Your hero"
             className="map-avatar"
             style={{ top: avatarPos.top, left: avatarPos.left }}

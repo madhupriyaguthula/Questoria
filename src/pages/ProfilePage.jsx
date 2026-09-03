@@ -5,6 +5,7 @@ import avatarHero from "../assets/avatar-hero.png";
 import heroPortrait from "../assets/hero.png";
 import saintPortrait from "../assets/saint-portrait.png";
 import questDetailsBg from "../assets/quest-details-bg.png";
+import CertificateModal from "../components/CertificateModal";
 import "./ProfilePage.css";
 
 // Profile portraits library mapping
@@ -241,48 +242,12 @@ function ProfilePage({
          MASTERY CERTIFICATE MODAL SCREEN
          ======================================================== */}
       {showCert && (
-        <div className="cert-modal-backdrop" onClick={() => setShowCert(false)}>
-          <div className="cert-scroll-box" onClick={(e) => e.stopPropagation()}>
-            <button className="cert-close-btn" onClick={() => setShowCert(false)}>
-              CLOSE X
-            </button>
-            
-            <div className="scroll-watermark"></div>
-
-            <div className="cert-scroll-body">
-              <span className="cert-header">SCROLL OF MASTERY</span>
-              <p className="cert-intro">Let it be known to all guilds and kingdoms that</p>
-              
-              <h2 className="cert-hero-name">{username}</h2>
-              
-              <div className="cert-divider"></div>
-              
-              <p className="cert-description">
-                has successfully braved all hazards, solved the ancient syntax scripts, 
-                and slain the World 7 guardian to achieve the legendary title of
-              </p>
-              
-              <h3 className="cert-hero-title">
-                {heroTitle || (totalXP >= 1500 ? "CHAMPION" : totalXP >= 600 ? "KNIGHT" : "APPRENTICE")}
-              </h3>
-              
-              <p className="cert-description">
-                in the sacred disciplines of the <strong>FRONT-END WEBPAGE PATH</strong>.
-              </p>
-
-              <div className="cert-footer-row">
-                <div className="cert-sign-box">
-                  <span className="sign-signature">The Saint</span>
-                  <span className="sign-label">Village Elder</span>
-                </div>
-                <div className="cert-wax-seal">
-                  <div className="wax-seal-center">Q</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <CertificateModal
+          onClose={() => setShowCert(false)}
+          pathName={selectedPath === "frontend" ? "HTML & CSS Web Mastery" : "Full Stack Web Mastery"}
+          xp={totalXP}
+          coins={totalCoins}
+        />
       )}
 
     </div>

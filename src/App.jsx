@@ -11,6 +11,7 @@ import BossBattlePage from "./pages/BossBattlePage";
 import RewardScreen from "./pages/RewardScreen";
 import ProfilePage from "./pages/ProfilePage";
 import "./App.css";
+import CertificatePage from "./pages/CertificatePage";
 
 // Dynamic worlds array safely reference cheyadaniki default fallback
 const worlds = window.worldsData || [];
@@ -150,10 +151,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Default route redirecting to Auth */}
-        <Route path="/" element={<Navigate to="/auth" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         
-        {/* Step 1: Login / Signup */}
-        <Route path="/auth" element={<Auth setUsername={setUsername} />} />
+        {/* Separate Login & Signup routes mapping to Auth component */}
+  <Route path="/login" element={<Auth startMode="login" setUsername={setUsername} />} />
+  <Route path="/signup" element={<Auth startMode="signup" setUsername={setUsername} />} />
 
         {/* Step 2: Avatar Selection Page */}
         <Route 
@@ -184,11 +186,13 @@ function App() {
               resetCourseProgress={resetCourseProgress}
               avatar={avatar}
             />
+        
           }
         />
-        <Route path="/quest/:worldId" element={<QuestPage />} />
-        <Route path="/quiz/:worldId" element={<QuizPage />} />
-        <Route path="/boss/:worldId" element={<BossBattlePage />} />
+        <Route path="/quest/:worldId" element={<QuestPage avatar={avatar} />} />
+        <Route path="/quiz/:worldId" element={<QuizPage avatar={avatar} />} />
+        <Route path="/boss/:worldId" element={<BossBattlePage avatar={avatar} />} />
+        <Route path="/certificate" element={<CertificatePage />} />
         <Route
           path="/reward/:worldId"
           element={

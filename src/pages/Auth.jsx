@@ -56,6 +56,7 @@ function Auth({ startMode, setUsername }) {
   const [showPw,  setShowPw]  = useState(false);
   const [showCpw, setShowCpw] = useState(false);
   const [agreed,  setAgreed]  = useState(false);
+  
 
   const [form, setForm] = useState({
     name:'', username:'', email:'', phone:'', password:'', confirmPassword:'',

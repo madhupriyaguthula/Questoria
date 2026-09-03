@@ -1,0 +1,422 @@
+/* CertificateModal.css - Royal Crown Astrolabe Scroll with Crisp Dark Footer Text */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700;900&family=Great+Vibes&family=Outfit:wght@400;600;700&display=swap');
+
+/* Main Fullscreen Backdrop with Fullscreen Rustic Parchment Image */
+.cert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevents vertical page scrollbars */
+}
+
+/* Translucent Dark-Gold Ambient Tint overlaying Fullscreen Parchment */
+.cert-transparent-gold-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(20, 12, 5, 0.45) 0%, rgba(6, 4, 2, 0.82) 100%);
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Modal Content Container */
+.cert-modal-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1080px;
+  width: 95vw;
+  max-height: 96vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Close button on top-right */
+.cert-close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: linear-gradient(180deg, #800a0a 0%, #400303 100%);
+  border: 2px solid #ffd700;
+  color: #ffe3a0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+  transition: all 0.2s ease;
+}
+
+.cert-close-btn:hover {
+  background: #b30f0f;
+  transform: scale(1.1);
+}
+
+/* Action Bar */
+.cert-action-bar {
+  margin-bottom: 10px;
+  z-index: 20;
+}
+
+.cert-print-btn {
+  background: linear-gradient(180deg, #59442a 0%, #2b1f13 100%);
+  border: 2px solid #ffd700;
+  color: #ffe3a0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(11px, 1.5vw, 14px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), inset 0 0 8px rgba(255, 215, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.cert-print-btn:hover {
+  background: linear-gradient(180deg, #785c39 0%, #3d2b1a 100%);
+  border-color: #ffffff;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+}
+
+/* Floating Royal Crown Scroll Certificate Cutout */
+.cert-parchment-frame {
+  width: 100%;
+  max-width: 1060px;
+  aspect-ratio: 940 / 620;
+  max-height: 80vh;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  border: none;
+  background-color: transparent;
+  box-sizing: border-box;
+  overflow: visible;
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 35px rgba(255, 215, 0, 0.7));
+  animation: cert-pop-up 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+}
+
+/* 3D Pop-Up Animation on Load */
+@keyframes cert-pop-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Subtle Diagonal Sheen Sweep */
+.cert-shine-sweep {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, transparent 38%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 215, 0, 0.5) 54%, transparent 68%);
+  pointer-events: none;
+  z-index: 25;
+  animation: shine-sweep-anim 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+}
+
+@keyframes shine-sweep-anim {
+  0% { transform: translate(-100%, -100%); opacity: 1; }
+  100% { transform: translate(100%, 100%); opacity: 0; }
+}
+
+/* Content Container Overlaid on top of Parchment Scroll */
+.cert-overlay-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  padding: 16% 15% 7.5% 15%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+/* Header Crest & Title Block */
+.cert-header-block {
+  margin-bottom: 2px;
+}
+
+.cert-main-gothic-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(22px, 3.8vw, 34px);
+  font-weight: 900;
+  color: #3d2408;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin: 0 0 2px 0;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8), 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+.cert-royal-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(9px, 1.3vw, 12px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #734e15;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6), 0 1px 1px rgba(255, 248, 220, 0.9);
+}
+
+/* Proclamation */
+.cert-proclamation-text {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(9px, 1.2vw, 11.5px);
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #4a3013;
+  margin: 2px 0;
+  text-shadow: 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+/* Hero Title & User Full Name */
+.cert-hero-fullname {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(20px, 3.2vw, 28px);
+  font-weight: 900;
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+.cert-hero-title-prefix {
+  color: #8b0000;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.6), 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+.cert-hero-divider {
+  color: #6b4712;
+  margin: 0 4px;
+}
+
+.cert-user-name {
+  color: #2b1704;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+/* Conquest Statement */
+.cert-conquest-statement {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(9.5px, 1.4vw, 12.5px);
+  font-weight: 600;
+  color: #3d2915;
+  margin: 2px 0;
+  max-width: 540px;
+  line-height: 1.35;
+  text-shadow: 0 1px 1px rgba(255, 248, 220, 0.9);
+}
+
+/* Achieved Path */
+.cert-achieved-path {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(15px, 2.5vw, 22px);
+  font-weight: 900;
+  color: #3b2308;
+  letter-spacing: 2.5px;
+  margin: 2px 0 4px 0;
+  border-bottom: 2px solid #856122;
+  padding-bottom: 2px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+/* Centered Duo Avatar Badge */
+.cert-duo-badge {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  height: clamp(65px, 12vw, 95px);
+  margin: 2px 0;
+}
+
+.cert-badge-hero {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.65));
+  z-index: 2;
+}
+
+.cert-badge-pet {
+  height: 62%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.65));
+  z-index: 3;
+}
+
+.cert-duo-ground-glow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 16px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.55) 0%, rgba(255, 215, 0, 0) 75%);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ========================================================
+   Stats & Signatures Footer Row (CRISP DARK TEXT)
+   ======================================================== */
+.cert-stats-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 22px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.cert-footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cinzel', serif;
+}
+
+.cert-footer-meta.left-meta { 
+  align-items: flex-start;
+  transform: translate(15px, -15px);
+}
+
+.cert-footer-meta.center-meta { 
+  align-items: center;
+  transform: translate(0px, -16px);
+}
+
+.cert-footer-meta.right-meta { 
+  align-items: flex-end;
+  transform: translate(-15px, -15px);
+}
+
+/* Footer Labels (DATE CONQUERED, TOTAL REWARDS, GRAND MASTER) */
+.meta-label {
+  font-size: clamp(7px, 1.1vw, 9px);
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #000000; /* ⬅️ Crisp Dark Black/Bronze */
+  text-shadow: 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+/* Footer Values (September 4, 2026, 7350 XP • 450 COINS) */
+.meta-value {
+  font-size: clamp(9.5px, 1.4vw, 12px);
+  font-weight: 900;
+  color: #000000; /* ⬅️ Solid Black for Maximum Legibility */
+  margin-top: 1px;
+  text-shadow: 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+/* Grand Master Signature ("Sage of Questoria") */
+.meta-signature {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(16px, 2.4vw, 21px);
+  font-weight: bold;
+  color: #5c0000; /* ⬅️ Dark Royal Crimson */
+  margin-top: 1px;
+  text-shadow: 0 1px 2px rgba(255, 248, 220, 0.95);
+}
+
+/* ========================================================
+   Responsive Breakpoints
+   ======================================================== */
+
+@media (max-width: 768px) {
+  .cert-modal-overlay {
+    padding: 6px;
+  }
+  .cert-overlay-content {
+    padding: 9% 12% 7% 12%;
+  }
+  .cert-duo-badge {
+    height: 55px;
+  }
+  .cert-stats-footer-row {
+    padding: 0 4px;
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-hero-fullname {
+    font-size: 15px;
+  }
+  .cert-achieved-path {
+    font-size: 12px;
+  }
+  .cert-duo-badge {
+    height: 42px;
+  }
+  .cert-print-btn {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .cert-modal-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  .cert-action-bar, .cert-close-btn, .cert-transparent-gold-bg, .cert-shine-sweep {
+    display: none !important;
+  }
+  #printable-certificate, #printable-certificate * {
+    visibility: visible;
+  }
+  #printable-certificate {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+}

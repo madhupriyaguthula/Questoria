@@ -103,11 +103,14 @@ const CheckIcon = () => (
   </svg>
 );
 
-function QuestPage() {
+function QuestPage({ avatar: avatarProp }) {
   const { worldId } = useParams();
   const navigate = useNavigate();
   const world = worlds.find((w) => w.id === parseInt(worldId));
   const [stage, setStage] = useState("details");
+  
+  const savedAvatar = localStorage.getItem("avatar") ? JSON.parse(localStorage.getItem("avatar")) : "female";
+  const avatarKey = avatarProp || savedAvatar || "female";
   
   // Load total stats from localStorage
   const userTotalXP = localStorage.getItem("totalXP") ? JSON.parse(localStorage.getItem("totalXP")) : 0;
@@ -549,6 +552,7 @@ function QuestPage() {
           dialogue={world.storyDialogue}
           onComplete={() => setStage("learning")}
           buttonLabel="Start Learning"
+          avatar={avatarKey}
         />
       </div>
     );

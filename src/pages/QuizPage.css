@@ -476,7 +476,7 @@
 
 .quiz-hero-sprite {
   width: 200px;
-  height: 500px;
+  height: 300px;
   object-fit: contain;
   filter: drop-shadow(0 0 12px rgba(212, 175, 106, 0.7));
 }

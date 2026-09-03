@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import VillagePage from "./pages/VillagePage";
 import PathSelectPage from "./pages/PathSelectPage";
+import Auth from "./pages/Auth";
+import AvatarSelection from "./pages/AvatarSelection";
 import WorldMap from "./pages/WorldMap";
 import QuestPage from "./pages/QuestPage";
 import QuizPage from "./pages/QuizPage";
@@ -9,6 +11,9 @@ import BossBattlePage from "./pages/BossBattlePage";
 import RewardScreen from "./pages/RewardScreen";
 import ProfilePage from "./pages/ProfilePage";
 import "./App.css";
+
+// Dynamic worlds array safely reference cheyadaniki default fallback
+const worlds = window.worldsData || [];
 
 // Helper: localStorage నుండి safe ga load చేయడానికి
 function loadState(key, fallback) {
@@ -110,10 +115,12 @@ function App() {
       localStorage.removeItem(`inventory_${selectedPath}`);
 
       // Clear world chapter subtopic checks for this course path
-      const pathWorlds = worlds.filter(w => w.pathId === selectedPath);
-      pathWorlds.forEach(w => {
-        localStorage.removeItem(`world-${w.id}-completed`);
-      });
+      if (Array.isArray(worlds)) {
+        const pathWorlds = worlds.filter(w => w.pathId === selectedPath);
+        pathWorlds.forEach(w => {
+          localStorage.removeItem(`world-${w.id}-completed`);
+        });
+      }
 
       window.location.reload();
     }
@@ -142,12 +149,28 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={hasSelectedPath ? <Navigate to="/worldmap" /> : <VillagePage />}
+        {/* Default route redirecting to Auth */}
+        <Route path="/" element={<Navigate to="/auth" replace />} />
+        
+        {/* Step 1: Login / Signup */}
+        <Route path="/auth" element={<Auth setUsername={setUsername} />} />
+
+        {/* Step 2: Avatar Selection Page */}
+        <Route 
+          path="/avatar-selection" 
+          element={<AvatarSelection avatar={avatar} setAvatar={setAvatar} />} 
         />
-        <Route path="/path-select" element={<PathSelectPage onSelectPath={handleSelectPath} />} />
-        <Route path="/village" element={<VillagePage />} />
+
+        {/* Step 3: Village Page (HUB before picking a path) */}
+        <Route path="/village" element={<VillagePage avatar={avatar} username={username} />} />
+
+        {/* Step 4: Path Selection Page */}
+        <Route 
+          path="/path-select" 
+          element={<PathSelectPage onSelectPath={handleSelectPath} />} 
+        />
+
+        {/* Step 5: World Map & Gameplay Routes */}
         <Route
           path="/worldmap"
           element={
@@ -194,6 +217,9 @@ function App() {
             />
           }
         />
+
+        {/* Catch-all fallback Route */}
+        <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     </BrowserRouter>
   );

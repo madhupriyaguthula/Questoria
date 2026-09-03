@@ -16,8 +16,7 @@
 // 4. XP / Coins / Level → import { getPlayer } from '../services/playerService'
 //    Use to display stat badges or player level on the card
 //
-// 5. After save → navigate('/village')
-//    Village reads: localStorage.getItem('questoria_avatar')
+// 5. After save → navigate('/path-select')
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { useState, useEffect, useCallback } from 'react';
@@ -43,11 +42,6 @@ function TreasureChestIcon({ className, ...props }) {
 }
 
 // ── Pet image paths ───────────────────────────────────────────────────────────
-// SETUP: Save your pet images to:
-//   src/assets/pet-dragon.png   ← crop the dragon from the combined pets image
-//   src/assets/pet-wolf.png     ← crop the wolf   from the combined pets image
-// The PetDisplay component below uses onError to fall back to emoji gracefully.
-// ──────────────────────────────────────────────────────────────────────────────
 const PET_SRCS = {
   dragon: new URL('../assets/pet-dragon.png', import.meta.url).href,
   wolf:   new URL('../assets/pet-wolf.png',   import.meta.url).href,
@@ -100,7 +94,7 @@ function SummoningCircle() {
       <circle cx="120" cy="120" r="10" fill="#f5c842" opacity="0.18"/>
 
       {/* Ancient rune marks at cardinal points */}
-      <text x="113" y="10"   fontSize="9" fill="#f5c842" opacity="0.85" fontFamily="serif">ᚠ</text>
+      <text x="113" y="10"  fontSize="9" fill="#f5c842" opacity="0.85" fontFamily="serif">ᚠ</text>
       <text x="220" y="125" fontSize="9" fill="#f5c842" opacity="0.85" fontFamily="serif">ᚢ</text>
       <text x="113" y="238" fontSize="9" fill="#f5c842" opacity="0.85" fontFamily="serif">ᚦ</text>
       <text x="6"   y="125" fontSize="9" fill="#f5c842" opacity="0.85" fontFamily="serif">ᚨ</text>
@@ -137,11 +131,9 @@ function HeroNameInput({ value, onChange, placeholder }) {
         spellCheck={false}
         autoComplete="off"
         aria-label="Choose your hero's name"
-        /* Stop card's onClick from triggering on input focus */
         onClick={e => e.stopPropagation()}
         onKeyDown={e => e.stopPropagation()}
       />
-      {/* Decorative sparkle inside the input */}
       <span className="hero-name-input__star" aria-hidden="true">✦</span>
     </div>
   );
@@ -168,7 +160,6 @@ function PetDisplay({ petType, size = 'card' }) {
           draggable="false"
         />
       ) : (
-        /* Emoji fallback — shows if pet image files haven't been added yet */
         <span className="pet-display__emoji">{fallbackEmoji}</span>
       )}
     </div>
@@ -189,7 +180,6 @@ function LockedPet({ emoji, name }) {
       <span className="pet-locked__emoji">{emoji}</span>
       <span className="pet-locked__lock">🔒</span>
       <span className="pet-locked__name">{name}</span>
-      {/* Tooltip on hover */}
       <span className="pet-locked__tooltip">Unlock at higher levels</span>
     </div>
   );
@@ -211,7 +201,6 @@ function PetChooser({ current, onChoose, onClose }) {
         >✕</button>
       </div>
 
-      {/* ── Unlocked companions ── */}
       <div className="pet-chooser__unlocked">
         {[
           { id: 'wolf',   label: 'Wolf'   },
@@ -224,7 +213,6 @@ function PetChooser({ current, onChoose, onClose }) {
             type="button"
             aria-pressed={current === p.id}
           >
-            {/* Show actual pet image thumbnail in chooser */}
             <div className="pet-opt__img-wrap">
               <PetDisplay petType={p.id} size="chooser"/>
             </div>
@@ -234,8 +222,6 @@ function PetChooser({ current, onChoose, onClose }) {
         ))}
       </div>
 
-      {/* ── Locked / future companions ── */}
-      {/* BACKEND HOOK: replace static list with GET /api/pets/unlocked/:playerId */}
       <p className="pet-chooser__locked-label">⚔ Future Companions</p>
       <div className="pet-chooser__locked-row">
         <LockedPet emoji="🦅" name="Griffin"/>
@@ -249,8 +235,7 @@ function PetChooser({ current, onChoose, onClose }) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// SUB-COMPONENT: INVENTORY PANEL (placeholder modal — 20 empty slots)
-// BACKEND HOOK: GET /api/inventory/:playerId → render items in .inv-slot grid
+// SUB-COMPONENT: INVENTORY PANEL
 // ════════════════════════════════════════════════════════════════════════════
 function InventoryPanel({ onClose }) {
   return (
@@ -262,7 +247,6 @@ function InventoryPanel({ onClose }) {
       aria-label="Inventory"
     >
       <div className="inv-panel" onClick={e => e.stopPropagation()}>
-        {/* Header */}
         <div className="inv-panel__header">
           <div className="inv-panel__title-row">
             <TreasureChestIcon className="inv-panel__icon" />
@@ -276,7 +260,6 @@ function InventoryPanel({ onClose }) {
           >✕</button>
         </div>
 
-        {/* Body — empty slots grid */}
         <div className="inv-panel__body">
           <div className="inv-grid">
             {Array.from({ length: 20 }).map((_, i) => (
@@ -297,7 +280,6 @@ function InventoryPanel({ onClose }) {
 
 // ════════════════════════════════════════════════════════════════════════════
 // HERO STATIC DATA
-// When backend is ready, fetch this from GET /api/avatars instead
 // ════════════════════════════════════════════════════════════════════════════
 const HEROES = {
   female: {
@@ -329,7 +311,7 @@ const HEROES = {
 };
 
 // ════════════════════════════════════════════════════════════════════════════
-// SUB-COMPONENT: HERO CARD (reusable for both male and female)
+// SUB-COMPONENT: HERO CARD
 // ════════════════════════════════════════════════════════════════════════════
 function HeroCard({
   hero,
@@ -359,25 +341,18 @@ function HeroCard({
       aria-label={`Select hero: ${heroName || hero.defaultName}`}
       onKeyDown={e => e.key === 'Enter' && onSelect(hero.id)}
     >
-      {/* ── Outer golden glow border ── */}
       <div className="av-card__glow" aria-hidden="true"/>
 
-      {/* ── CHARACTER IMAGE AREA ── */}
       <div className="av-card__stage">
-        {/* Ground mist atmosphere */}
         <div className="av-card__mist" aria-hidden="true"/>
-
-        {/* Ground shadow ellipse under hero */}
         <div className="av-card__shadow" aria-hidden="true"/>
 
-        {/* Summoning circle — only visible when this hero is selected */}
         {isSelected && (
           <div className="av-card__summon" aria-hidden="true">
             <SummoningCircle/>
           </div>
         )}
 
-        {/* Hero portrait — transparent PNG, no background, no text, no UI on image */}
         <img
           src={hero.src}
           alt={hero.alt}
@@ -385,29 +360,22 @@ function HeroCard({
           draggable="false"
         />
 
-        {/* Pet companion — floats beside hero at bottom right */}
         <div className="av-card__pet-stage" aria-label={`${petType} companion`}>
           <PetDisplay petType={petType} size="card"/>
         </div>
-
       </div>
 
-      {/* ── INFO PANEL ── */}
       <div className="av-card__info">
-        {/* Class label */}
         <span className="av-card__class">{hero.classLabel}</span>
 
-        {/* Editable hero name input */}
         <HeroNameInput
           value={heroName}
           onChange={onNameChange}
           placeholder={hero.defaultName}
         />
 
-        {/* Lore description */}
         <p className="av-card__desc">{hero.description}</p>
 
-        {/* Stat chips */}
         <div className="av-card__stats">
           {hero.stats.map(s => (
             <span key={s.label} className="av-stat">
@@ -417,7 +385,6 @@ function HeroCard({
           ))}
         </div>
 
-        {/* Current companion name */}
         <div className="av-card__companion">
           <span className="av-card__pet-label">Companion:</span>
           <span className="av-card__pet-name">
@@ -426,7 +393,6 @@ function HeroCard({
         </div>
       </div>
 
-      {/* ── CHANGE COMPANION BUTTON ── */}
       <button
         className="av-card__pet-btn"
         onMouseDown={e => e.stopPropagation()}
@@ -442,7 +408,6 @@ function HeroCard({
         <span>🐾</span> Change Companion
       </button>
 
-      {/* ── PET CHOOSER DROPDOWN ── */}
       {isPetOpen && (
         <div id={`pet-chooser-${hero.id}`} onClick={e => e.stopPropagation()}>
           <PetChooser
@@ -453,7 +418,6 @@ function HeroCard({
         </div>
       )}
 
-      {/* ── SELECTED BADGE (floats above card) ── */}
       {isSelected && (
         <div className="av-card__badge" role="status">✓ Selected Hero</div>
       )}
@@ -463,30 +427,27 @@ function HeroCard({
 
 // ════════════════════════════════════════════════════════════════════════════
 // MAIN PAGE COMPONENT: AvatarSelection
-// Route: /avatar   (already registered in App.jsx)
 // ════════════════════════════════════════════════════════════════════════════
-export default function AvatarSelection() {
+export default function AvatarSelection({ avatar, setAvatar }) {
   const navigate = useNavigate();
 
   // ── State ──────────────────────────────────────────────────────────────
-  const [selected,   setSelected]   = useState(null);     // 'female' | 'male' | null
-  const [hovered,    setHovered]    = useState(null);
-  const [femaleName, setFemaleName] = useState('');        // custom name for female hero
-  const [maleName,   setMaleName]   = useState('');        // custom name for male hero
-  const [femalePet,  setFemalePet]  = useState('wolf');    // wolf | dragon
-  const [malePet,    setMalePet]    = useState('dragon');  // wolf | dragon
-  const [petOpen,    setPetOpen]    = useState(null);      // 'female' | 'male' | null
-  const [invOpen,    setInvOpen]    = useState(false);
-  const [confirming, setConfirming] = useState(false);
+  const [selected,    setSelected]    = useState(avatar || null); 
+  const [hovered,     setHovered]     = useState(null);
+  const [femaleName,  setFemaleName]  = useState(''); 
+  const [maleName,    setMaleName]    = useState(''); 
+  const [femalePet,   setFemalePet]   = useState('wolf'); 
+  const [malePet,     setMalePet]     = useState('dragon'); 
+  const [petOpen,     setPetOpen]     = useState(null); 
+  const [invOpen,     setInvOpen]     = useState(false);
+  const [confirming,  setConfirming]  = useState(false);
 
-  // Resolved display name for the selected hero
   const heroDisplayName = selected === 'female'
     ? (femaleName.trim() || HEROES.female.defaultName)
     : selected === 'male'
       ? (maleName.trim() || HEROES.male.defaultName)
       : '';
 
-  // ── Close panels on Escape ─────────────────────────────────────────────
   useEffect(() => {
     const handleKey = e => {
       if (e.key === 'Escape') { setPetOpen(null); setInvOpen(false); }
@@ -495,59 +456,48 @@ export default function AvatarSelection() {
     return () => window.removeEventListener('keydown', handleKey);
   }, []);
 
-  // ── Handlers ──────────────────────────────────────────────────────────
   const handleSelect = useCallback(id => {
     setSelected(id);
-    setPetOpen(null); // close any open chooser on hero switch
-  }, []);
+    if (setAvatar) setAvatar(id); // App.jsx & localStorage sync
+    setPetOpen(null); 
+  }, [setAvatar]);
 
   const handlePetToggle = useCallback(id => {
     setPetOpen(prev => prev === id ? null : id);
   }, []);
 
-  // ── Continue / confirm ─────────────────────────────────────────────────
   async function handleContinue() {
     if (!selected || confirming) return;
     setConfirming(true);
 
-    // ── BACKEND HOOK — uncomment when API is ready ──────────────────────
-    // const petId  = selected === 'female' ? femalePet : malePet;
-    // const hName  = selected === 'female'
-    //   ? (femaleName.trim() || HEROES.female.defaultName)
-    //   : (maleName.trim()   || HEROES.male.defaultName);
-    //
-    // const res  = await fetch('/api/player/create', {
-    //   method:  'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body:    JSON.stringify({ avatarId: selected, heroName: hName, petId }),
-    // });
-    // const data = await res.json();
-    // localStorage.setItem('questoria_player_id', data.id);
-    // localStorage.setItem('questoria_avatar',    selected);
-    // ───────────────────────────────────────────────────────────────────
+    if (setAvatar) setAvatar(selected);
 
-    setTimeout(() => navigate('/village'), 1800);
+    // Save hero info to local cache for persona identification
+    const hName = selected === 'female'
+      ? (femaleName.trim() || HEROES.female.defaultName)
+      : (maleName.trim()   || HEROES.male.defaultName);
+    const petId = selected === 'female' ? femalePet : malePet;
+
+    localStorage.setItem('questoria_avatar', selected);
+    localStorage.setItem('questoria_hero_name', hName);
+    localStorage.setItem('questoria_pet', petId);
+
+    // Route directly to Person 2 Path Select page
+    setTimeout(() => navigate('/village'), 1500);
   }
 
-  // ════════════════════════════════════════════════════════════════════════
-  // RENDER
-  // ════════════════════════════════════════════════════════════════════════
   return (
     <div className="avpage">
 
-      {/* ── BACKGROUND — fantasy village scene, faded so heroes pop ── */}
       <div
         className="avpage__bg"
         style={{ backgroundImage: `url(${avatarBg})` }}
         aria-hidden="true"
       />
-      {/* Dark gradient overlay — layered for depth + readability */}
       <div className="avpage__overlay" aria-hidden="true"/>
 
-      {/* ── ATMOSPHERIC PARTICLES — floating gold dust motes ── */}
       <Particles/>
 
-      {/* ── INVENTORY FAB — top-right floating button ── */}
       <button
         id="inv-fab-btn"
         className="inv-fab"
@@ -560,7 +510,6 @@ export default function AvatarSelection() {
         <span className="inv-fab__ring" aria-hidden="true"/>
       </button>
 
-      {/* ── PAGE HEADER ── */}
       <header className="avpage__header">
         <p className="avpage__eyebrow">✦ The Beginning of Your Legend ✦</p>
         <h1 className="avpage__title">Choose Your Hero</h1>
@@ -570,10 +519,7 @@ export default function AvatarSelection() {
         </p>
       </header>
 
-      {/* ── HERO STAGE — two character cards ── */}
       <div className="av-stage">
-
-        {/* Female hero — left */}
         <HeroCard
           hero={HEROES.female}
           selected={selected}
@@ -590,14 +536,12 @@ export default function AvatarSelection() {
           onPetClose={() => setPetOpen(null)}
         />
 
-        {/* Center sword divider */}
         <div className="av-center-divider" aria-hidden="true">
           <span className="av-cdiv__line"/>
           <span className="av-cdiv__icon">⚔</span>
           <span className="av-cdiv__line"/>
         </div>
 
-        {/* Male hero — right */}
         <HeroCard
           hero={HEROES.male}
           selected={selected}
@@ -615,7 +559,6 @@ export default function AvatarSelection() {
         />
       </div>
 
-      {/* ── FOOTER — selection hint + continue button ── */}
       <div className="avpage__footer">
         {!selected && (
           <p className="avpage__footer-hint">✦ Click a hero to begin your destiny ✦</p>
@@ -647,7 +590,6 @@ export default function AvatarSelection() {
         </button>
       </div>
 
-      {/* ── INVENTORY MODAL ── */}
       {invOpen && <InventoryPanel onClose={() => setInvOpen(false)}/>}
     </div>
   );

@@ -1,19 +1,10 @@
 // src/pages/Auth.jsx
 // QUESTORIA — Login / Sign Up Page
-//
-// HOW IT WORKS:
-//   /auth   → defaults to Sign Up (coming from "Start Adventure")
-//   /login  → opens Login tab directly
-//   /signup → opens Sign Up tab directly
 
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Auth.css';
 
-// ── Background image ──────────────────────────────────────
-// Copy your file: ChatGPT_Image_Jun_29__2026__06_09_25_PM.png
-// Paste into:     src/assets/
-// Rename to:      auth-bg.png
 import authBg from '../assets/auth-bg.png';
 
 // ── Inline SVG icons ─────────────────────────────────────
@@ -104,34 +95,25 @@ function Auth({ startMode }) {
 
     setLoading(true);
 
-    // ── REPLACE WITH REAL API when backend is ready ──────
-    // const url  = mode === 'login'
-    //   ? 'http://localhost:5000/api/auth/login'
-    //   : 'http://localhost:5000/api/auth/register';
-    // const body = mode === 'login'
-    //   ? { username: form.username, password: form.password }
-    //   : { name: form.name, username: form.username,
-    //       email: form.email, phone: form.phone,
-    //       password: form.password };
-    // const res  = await fetch(url, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(body),
-    // });
-    // const data = await res.json();
-    // if (!res.ok) { setError(data.message); setLoading(false); return; }
-    // localStorage.setItem('questoria_token', data.token);
-    // ────────────────────────────────────────────────────
-
     await new Promise(r => setTimeout(r, 1300));
     setLoading(false);
 
+    // Save session data to local storage
+    const userPayload = {
+      name: form.name || form.username,
+      username: form.username,
+      email: form.email,
+      isAuthenticated: true
+    };
+    localStorage.setItem('questoria_user', JSON.stringify(userPayload));
+
+    // Redirect to matching routes
     if (mode === 'signup') {
       setSuccess('Legend created! Entering the kingdom…');
-      setTimeout(() => navigate('/avatar'), 1600);
+      setTimeout(() => navigate('/avatar-selection'), 1600);
     } else {
       setSuccess('Welcome back, hero! Entering the kingdom…');
-      setTimeout(() => navigate('/village'), 1400);
+      setTimeout(() => navigate('/avatar-selection'), 1400);
     }
   }
 

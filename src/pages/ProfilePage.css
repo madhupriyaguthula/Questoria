@@ -1,0 +1,736 @@
+/* ========================================================
+   ProfilePage.css - RPG Theme & Ancient Aesthetics
+   ======================================================== */
+
+.profile-fullpage {
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--parchment);
+  font-family: 'EB Garamond', serif;
+  box-sizing: border-box;
+  padding: 20px 40px;
+  position: relative;
+}
+
+/* Semi-transparent dark medieval overlay */
+.profile-fullpage::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(13,14,26,0.7) 0%, rgba(13,14,26,0.92) 100%);
+  z-index: 1;
+}
+
+/* 1. Header Navigation */
+.profile-header-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2px double var(--gold-dark);
+  padding-bottom: 12px;
+  margin-bottom: 30px;
+}
+
+.profile-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: var(--text-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  margin: 0;
+}
+
+.profile-back-btn {
+  background: linear-gradient(180deg, rgba(80, 15, 15, 0.95) 0%, rgba(45, 8, 8, 0.95) 100%);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold-light);
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6), inset 0 0 4px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.profile-back-btn:hover {
+  background: linear-gradient(180deg, rgba(110, 20, 20, 0.95) 0%, rgba(65, 10, 10, 0.95) 100%);
+  border-color: var(--gold-medium);
+  box-shadow: 0 0 10px var(--gold-shadow);
+  transform: scale(1.02);
+}
+
+/* 2. Container Panel Grid */
+.profile-container {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1.3fr;
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+/* Gothic Parchment Box Cards */
+.profile-card {
+  background: rgba(18, 14, 11, 0.93);
+  border: 3px double var(--gold-dim);
+  border-radius: 6px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 10px 25px rgba(0,0,0,0.85);
+  padding: 24px 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.3rem;
+  color: var(--gold-light);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0 0 20px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  border-bottom: 1px solid rgba(212,175,55,0.25);
+  padding-bottom: 6px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Decorative Gold Ornaments */
+.card-decor-top, .card-decor-bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 6px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.card-decor-top {
+  top: 6px;
+  border-top: 1px solid var(--gold-medium);
+}
+.card-decor-bottom {
+  bottom: 6px;
+  border-bottom: 1px solid var(--gold-medium);
+}
+
+/* ========================================================
+   LEFT PANEL - Identity
+   ======================================================== */
+.hero-portrait-frame {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--gold-medium);
+  padding: 4px;
+  box-shadow: 0 0 20px rgba(212,175,55,0.2), inset 0 0 15px rgba(0,0,0,0.8);
+  background: radial-gradient(circle, #3a2e22 0%, #17110c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.hero-portrait-image {
+  width: 95%;
+  height: 95%;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+}
+
+.hero-identity-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.username-display-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.hero-display-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff4d0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.edit-name-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  filter: grayscale(1);
+  transition: all 0.2s ease;
+}
+.edit-name-btn:hover {
+  filter: grayscale(0) drop-shadow(0 0 4px var(--gold));
+  transform: scale(1.15);
+}
+
+/* Rename input elements */
+.rename-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 90%;
+}
+
+.rename-input {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--gold-dark);
+  color: var(--parchment);
+  font-family: 'EB Garamond', serif;
+  font-size: 1.15rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-align: center;
+  width: 100%;
+  outline: none;
+}
+.rename-input:focus {
+  border-color: var(--gold-medium);
+  box-shadow: 0 0 6px var(--gold-shadow);
+}
+
+.rename-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-name-btn, .cancel-name-btn {
+  padding: 4px 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.save-name-btn {
+  background: linear-gradient(180deg, #27ae60, #1e8449);
+  color: #fff;
+  border: 1px solid #2ecc71;
+}
+.cancel-name-btn {
+  background: linear-gradient(180deg, #7f8c8d, #626567);
+  color: #fff;
+  border: 1px solid #bdc3c7;
+}
+
+.hero-title-tag {
+  font-size: 0.95rem;
+  color: var(--gold-medium);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Switch portrait section */
+.portrait-picker-box {
+  width: 100%;
+  border-top: 1px dashed rgba(212,175,55,0.25);
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-avatar-link-btn {
+  background: linear-gradient(180deg, rgba(80, 15, 15, 0.95) 0%, rgba(45, 8, 8, 0.95) 100%);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold-light);
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 0 4px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  width: 90%;
+  text-align: center;
+}
+
+.edit-avatar-link-btn:hover {
+  background: linear-gradient(180deg, rgba(110, 20, 20, 0.95) 0%, rgba(65, 10, 10, 0.95) 100%);
+  border-color: var(--gold-medium);
+  box-shadow: 0 0 12px var(--gold-shadow);
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* ========================================================
+   MIDDLE PANEL - Stats
+   ======================================================== */
+.rpg-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.stat-pill {
+  background: rgba(30, 24, 18, 0.85);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 4px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+.stat-icon {
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+}
+
+.stat-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #8c857b;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-family: 'Cinzel', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.course-progress-section {
+  width: 100%;
+  border-top: 1px dashed rgba(212,175,55,0.25);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #8c857b;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+
+.active-path-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  color: #fff4d0;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 20px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--gold-dark);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+  margin-bottom: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37 0%, #aa7c11 100%);
+  box-shadow: 0 0 10px rgba(212,175,55,0.5);
+  transition: width 0.5s ease-out;
+}
+
+.progress-bar-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.9);
+}
+
+.progress-bar-subtitle {
+  font-size: 0.85rem;
+  color: #8c857b;
+}
+
+.certificate-unlock-box {
+  width: 100%;
+  margin-top: 15px;
+  border-top: 1px dashed rgba(212,175,55,0.25);
+  padding-top: 20px;
+  text-align: center;
+}
+
+.claim-certificate-btn {
+  background: linear-gradient(180deg, rgba(142, 68, 173, 0.95) 0%, rgba(91, 44, 111, 0.95) 100%);
+  border: 1.5px solid #a569bd;
+  color: #ebdef0;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6), 0 0 12px rgba(165,105,189,0.3);
+  transition: all 0.2s ease;
+  width: 100%;
+}
+.claim-certificate-btn:hover {
+  background: linear-gradient(180deg, rgba(165, 105, 189, 0.95) 0%, rgba(115, 58, 143, 0.95) 100%);
+  box-shadow: 0 0 15px rgba(165,105,189,0.6);
+  transform: translateY(-1px);
+}
+
+.certificate-locked-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #5d5345;
+}
+.certificate-locked-state span {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+.cert-lock-desc {
+  font-size: 0.8rem;
+  margin: 0;
+  max-width: 250px;
+}
+
+/* ========================================================
+   RIGHT PANEL - Loot & World Rewards
+   ======================================================== */
+.world-achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.world-reward-row {
+  background: rgba(30, 24, 18, 0.5);
+  border: 1px solid rgba(212,175,55,0.1);
+  border-radius: 4px;
+  padding: 8px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 12px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.world-reward-row.completed {
+  background: rgba(30, 24, 18, 0.9);
+  border-color: rgba(212,175,55,0.25);
+  box-shadow: inset 0 0 6px rgba(212,175,55,0.05);
+}
+.world-reward-row.locked {
+  filter: opacity(0.45);
+}
+
+.reward-badge-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reward-badge-emoji {
+  font-size: 16px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.reward-badge-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff4d0;
+}
+
+.reward-item-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 1px dashed rgba(212,175,55,0.15);
+  padding-left: 10px;
+}
+.reward-item-col.equipped {
+  border-left-color: rgba(46, 204, 113, 0.5);
+}
+
+.reward-item-emoji {
+  font-size: 16px;
+}
+
+.reward-item-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.reward-item-name {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--parchment);
+}
+
+.reward-item-slot {
+  font-size: 0.7rem;
+  color: #8c857b;
+  text-transform: uppercase;
+}
+
+/* ========================================================
+   MASTERY CERTIFICATE MODAL
+   ======================================================== */
+.cert-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cert-scroll-box {
+  background-color: #f7eecf;
+  background-image: radial-gradient(rgba(212,175,55,0.08) 1px, transparent 0),
+                    radial-gradient(rgba(0,0,0,0.05) 2px, transparent 0);
+  background-size: 24px 24px;
+  border: 8px double #624a2e;
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.9), inset 0 0 60px rgba(139,114,84,0.4);
+  padding: 40px;
+  width: 100%;
+  max-width: 580px;
+  color: #3b2d1c;
+  font-family: 'EB Garamond', serif;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  animation: roll-down 0.5s ease-out;
+}
+
+@keyframes roll-down {
+  0% { transform: scaleY(0); opacity: 0; transform-origin: top; }
+  100% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+}
+
+.cert-close-btn {
+  position: absolute;
+  top: 15px; right: 15px;
+  background: #3b2d1c;
+  border: 1px solid #624a2e;
+  color: #f7eecf;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+.cert-close-btn:hover {
+  background: #624a2e;
+  color: #fff;
+}
+
+/* Watermark crest behind text */
+.scroll-watermark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  border: 2px dashed rgba(98, 74, 46, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cert-scroll-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cert-header {
+  font-family: 'Cinzel', serif;
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #4d361c;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #624a2e;
+  padding-bottom: 4px;
+}
+
+.cert-intro {
+  font-style: italic;
+  font-size: 1.15rem;
+  margin: 0 0 12px 0;
+  color: #5c4731;
+}
+
+.cert-hero-name {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: #7d0f0f;
+  margin: 4px 0;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  letter-spacing: 1px;
+}
+
+.cert-divider {
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #624a2e 50%, transparent);
+  margin: 15px 0;
+}
+
+.cert-description {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+  max-width: 440px;
+}
+
+.cert-hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #aa7c11;
+  margin: 8px 0;
+}
+
+.cert-footer-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.cert-sign-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-signature {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: bold;
+  color: #4a3825;
+  border-bottom: 1.5px solid #624a2e;
+  width: 120px;
+  padding-bottom: 4px;
+}
+
+.sign-label {
+  font-size: 0.8rem;
+  color: #7a6652;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.cert-wax-seal {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a91b1b 0%, #700a0a 100%);
+  border: 1.5px dashed #400505;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 2px 4px rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-12deg);
+}
+
+.wax-seal-center {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: #ffc8c8;
+  opacity: 0.8;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* ========================================================
+   Responsive Media Queries
+   ======================================================== */
+
+@media (max-width: 1024px) {
+  .profile-container {
+    grid-template-columns: 1fr 1fr;
+  }
+  .achievements-panel {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-fullpage {
+    padding: 15px;
+  }
+  .profile-container {
+    grid-template-columns: 1fr;
+  }
+  .achievements-panel {
+    grid-column: span 1;
+  }
+  .profile-main-title {
+    font-size: 1.6rem;
+  }
+}

@@ -1,0 +1,302 @@
+/* WorldMap.css - RPG Character Sheet & Equipment HUD styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Outfit:wght@400;600;700&display=swap');
+
+/* Clickable Avatar on Map */
+.map-avatar.clickable {
+  cursor: pointer;
+  pointer-events: auto !important;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.map-avatar.clickable:hover {
+  transform: translate(-50%, -100%) scale(1.1);
+  filter: drop-shadow(0 0 16px rgba(212, 175, 106, 0.95)) brightness(1.15);
+}
+
+/* Character Sheet Modal Backdrop */
+.char-sheet-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(5, 4, 3, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: backdrop-fade-in 0.25s ease both;
+}
+
+@keyframes backdrop-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Content Box */
+.char-sheet-box {
+  background: rgba(18, 13, 10, 0.96);
+  border: 2px solid var(--gold-medium);
+  box-shadow: 
+    0 0 0 4px #0c0806, 
+    0 20px 45px rgba(0,0,0,0.9), 
+    inset 0 0 40px rgba(0,0,0,0.95);
+  border-radius: 12px;
+  width: min(650px, 92%);
+  padding: 30px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: modal-slide-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15) both;
+}
+
+@keyframes modal-slide-up {
+  0% { transform: translateY(30px) scale(0.95); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Corner ornaments */
+.char-sheet-box::before,
+.char-sheet-box::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--gold-light);
+  opacity: 0.85;
+}
+.char-sheet-box::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+.char-sheet-box::after { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+.char-sheet-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #331515;
+  border: 1px solid #7d2a2a;
+  color: #f1948a;
+  padding: 4px 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.char-sheet-close-btn:hover {
+  background: #7d2a2a;
+  color: #ffffff;
+}
+
+/* Header Info */
+.char-sheet-header {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.char-sheet-title {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 900;
+  background: var(--text-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+}
+
+.char-sheet-subtitle {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Main Equipment Layout split */
+.char-sheet-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Center Avatar Display Column */
+.char-avatar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.char-avatar-frame {
+  width: 160px;
+  height: 220px;
+  background: #0f0b08;
+  border: 2.5px solid var(--gold-medium);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 4px 15px rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.char-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+}
+
+.char-title-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #fff4d0;
+  border: 1px solid rgba(212,175,55,0.3);
+  background: rgba(212,175,55,0.06);
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+/* Equipment Slots Column */
+.char-slots-col {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.gear-slot-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 8, 6, 0.7);
+  border: 1.5px solid rgba(212, 175, 55, 0.15);
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.gear-slot-card.equipped {
+  border-color: var(--gold-medium);
+  background: rgba(25, 20, 15, 0.95);
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.12), inset 0 0 8px rgba(0,0,0,0.4);
+}
+
+.gear-slot-box {
+  width: 38px;
+  height: 38px;
+  border: 1.5px dashed rgba(212,175,55,0.25);
+  border-radius: 4px;
+  background: #0c0806;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+}
+
+.gear-slot-card.equipped .gear-slot-box {
+  border: 1.5px solid var(--gold-medium);
+  border-style: solid;
+  background: radial-gradient(circle, #3d2f1f 0%, #1c140f 100%);
+  filter: drop-shadow(0 0 4px var(--gold-shadow));
+}
+
+.gear-slot-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.gear-slot-type {
+  font-size: 9px;
+  font-family: 'Cinzel', serif;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.gear-slot-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #7f6e5d;
+}
+
+.gear-slot-card.equipped .gear-slot-name {
+  color: var(--gold-bright);
+  text-shadow: 0 0 5px rgba(244, 215, 138, 0.3);
+}
+
+/* Responsive details for mobile stack */
+@media (max-width: 580px) {
+  .char-sheet-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .char-avatar-frame {
+    height: 160px;
+    width: 120px;
+  }
+}
+
+/* Avatar & Pet Wrapper on Map */
+.avatar-pet-map-wrapper {
+  position: absolute;
+  transform: translate(-50%, -85%);
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 20;
+  transition: top 1.2s ease-in-out, left 1.4s ease-in-out;
+  pointer-events: none;
+}
+
+.map-avatar-in-wrapper {
+  width: 90px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 106, 0.8));
+  animation: avatar-idle-in-wrapper 1.5s ease-in-out infinite;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.map-avatar-in-wrapper:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 16px rgba(212, 175, 106, 0.95)) brightness(1.15);
+}
+
+@keyframes avatar-idle-in-wrapper {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.map-pet-sprite {
+  font-size: 28px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  animation: pet-idle-bounce 1.3s ease-in-out infinite alternate;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+@keyframes pet-idle-bounce {
+  0% { transform: translateY(0) scaleX(1); }
+  100% { transform: translateY(-8px) scaleX(0.95); }
+}

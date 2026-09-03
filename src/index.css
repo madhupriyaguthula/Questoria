@@ -48,9 +48,13 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* ── Focus visible for keyboard users ── */
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+html, body, #root {
+  overflow-x: hidden;
+  width: 100%;
 }

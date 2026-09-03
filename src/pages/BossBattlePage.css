@@ -1,0 +1,529 @@
+/* BossBattlePage.css - Visual Novel Style Boss Encounter Screen */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* Main Fullpage Wrapper */
+.boss-battle-fullpage {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-parchment);
+  position: relative;
+  overflow: hidden !important; /* Hide scrollbars to lock view */
+  box-sizing: border-box;
+}
+
+/* Atmospheric battle ambient overlay */
+.boss-battle-fullpage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.75) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Page content alignment */
+.boss-battle-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 20px 60px 10px 60px;
+}
+
+/* Header alignment container */
+.boss-battle-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 10px;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+/* Screen Title */
+.boss-battle-content h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  background: var(--text-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  text-align: center;
+}
+
+/* Back Button styling positioned cleanly on the left edge */
+.boss-battle-content .back-btn {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, rgba(80, 15, 15, 0.95) 0%, rgba(45, 8, 8, 0.95) 100%);
+  border: 1px solid var(--gold-dark);
+  color: var(--gold-light);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 0 4px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.boss-battle-content .back-btn:hover {
+  background: linear-gradient(180deg, rgba(110, 20, 20, 0.95) 0%, rgba(65, 10, 10, 0.95) 100%);
+  border-color: var(--gold-medium);
+  box-shadow: 0 0 8px var(--gold-shadow);
+  transform: translateY(-50%) scale(1.02);
+}
+
+/* Arena Grid - splits screen side-by-side using grid columns to prevent overlapping */
+.boss-arena-wide {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  align-items: flex-end; /* Align avatars flat on the bottom ground */
+  width: 100%;
+  flex-grow: 1;
+  gap: 24px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+/* Fighter columns */
+.fighter-side {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.fighter-left {
+  align-items: flex-start;
+  justify-self: start;
+  text-align: left;
+ 
+}
+
+.fighter-right {
+  align-items: flex-end;
+  justify-self: end;
+  text-align: right;
+}
+
+/* Avatar Images - restricted width to prevent overlapping middle box */
+.fighter-img-lg {
+  height: auto;
+  max-height: 420px;
+  width: 100%;
+  max-width: 250px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.9));
+  transition: all 0.2s ease;
+}
+
+/* Hit visual effect (flashes red and shakes) */
+.fighter-hit {
+  animation: hit-shake 0.4s ease-in-out both;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.8)) brightness(1.2) sepia(1) hue-rotate(-50deg) saturate(3) !important;
+}
+
+@keyframes hit-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px) rotate(-1deg); }
+  40% { transform: translateX(8px) rotate(1deg); }
+  60% { transform: translateX(-6px) rotate(-1deg); }
+  80% { transform: translateX(4px) rotate(1deg); }
+  100% { transform: translateX(0); }
+}
+
+/* Character Badge Cards under avatars */
+.fighter-badge-card {
+  background: rgba(18, 13, 10, 0.9);
+  border: 1px solid rgba(168, 132, 52, 0.4);
+  border-radius: 4px;
+  padding: 6px 16px;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 170px;
+  box-sizing: border-box;
+}
+
+.badge-title {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.badge-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* HP Value label text */
+.fighter-hp-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-parchment);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Health status HUD bar */
+.fighter-hp-bar {
+  background: #0f0b08;
+  border: 1.5px solid var(--gold-dark);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8), inset 0 0 5px rgba(0, 0, 0, 0.8);
+  height: 14px;
+  width: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 14px;
+}
+
+/* Player Green HP bar fill */
+.hp-fill.player-hp {
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
+  height: 100%;
+  transition: width 0.3s ease-out;
+}
+
+/* Boss Red HP bar fill */
+.hp-fill.boss-hp-fill {
+  background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+  height: 100%;
+  transition: width 0.3s ease-out;
+}
+
+/* Center Question Box Card */
+.battle-center {
+  position: relative;
+  flex: 1.4;
+  max-width: 680px;
+  min-height: 450px;
+  padding: 35px 32px 28px 32px;
+  background: #0b0806; /* Dark slate/obsidian black background */
+  border: 3px double var(--gold-medium); /* Ornate double border */
+  box-shadow: 
+    0 0 0 4px #0b0806, 
+    0 15px 40px rgba(0, 0, 0, 0.95), 
+    inset 0 0 35px rgba(212, 175, 55, 0.12); /* Subtle gold inner glow */
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  align-self: center; /* Center vertically on the screen */
+  margin-bottom: 40px;
+}
+
+/* Ornate corner flourishes using border offsets */
+.battle-center::before, .battle-center::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--gold-light);
+  z-index: 5;
+}
+
+.battle-center::before {
+  top: 5px;
+  left: 5px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.battle-center::after {
+  top: 5px;
+  right: 5px;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* Center Glowing Gem Ornament */
+.center-gem-ornament {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.center-gem-ornament::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  background: #a855f7; /* Vibrant purple gem */
+  border: 2px solid var(--gold-light);
+  transform: rotate(45deg);
+  box-shadow: 
+    0 0 15px #a855f7, 
+    0 0 6px #ffffff,
+    0 0 25px rgba(168, 85, 247, 0.7);
+}
+
+.center-gem-ornament::after {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 2px;
+  background: var(--gold-medium);
+  border-radius: 1px;
+  z-index: -1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Question box progress header */
+.battle-center .progress-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gold-light);
+  border: 1.5px solid var(--gold-medium);
+  background: #0c0806;
+  padding: 4px 18px;
+  border-radius: 0; /* Flat RPG border tag */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  text-align: center;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+/* Question Statement */
+.boss-question {
+  color: var(--text-parchment);
+  font-size: 20px;
+  line-height: 1.55;
+  text-align: center;
+  margin: 0 0 22px 0;
+  font-weight: 500;
+  text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Grid layout for choices */
+.battle-center .options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* Option choices buttons */
+.battle-center .options .option-btn {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #181310 0%, #0c0806 100%);
+  border: 1.5px solid #5a4225; /* Ornate wood/bronze border */
+  color: var(--text-parchment);
+  padding: 10px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15.5px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0,0,0,0.6);
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* Diamond index box wrapper */
+.option-diamond {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border: 1.5px solid #5a4225;
+  background: #0c0806;
+  transform: rotate(45deg);
+  margin-right: 14px;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Letter text inside diamond */
+.option-letter {
+  transform: rotate(-45deg);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover over options */
+.battle-center .options .option-btn:hover {
+  background: linear-gradient(180deg, #241c17 0%, #0f0a08 100%);
+  border-color: var(--gold-medium);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25), inset 0 0 8px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.battle-center .options .option-btn:hover .option-diamond {
+  border-color: var(--gold-medium);
+}
+
+/* Selected Option highlight */
+.battle-center .options .option-btn.selected {
+  background: linear-gradient(180deg, #3d2f1f 0%, #1e150d 100%) !important;
+  border-color: var(--gold-light) !important;
+  color: var(--gold-light) !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.35), inset 0 0 8px rgba(0,0,0,0.3) !important;
+  font-weight: 700;
+  transform: scale(1.02);
+}
+
+.battle-center .options .option-btn.selected .option-diamond {
+  border-color: var(--gold-light);
+  background: #2b1f13;
+  box-shadow: 0 0 8px rgba(255, 227, 160, 0.35);
+}
+
+/* ATTACK action button (Glowing purple hexagon banner shape) */
+.attack-btn {
+  background: linear-gradient(90deg, #5b21b6 0%, #7c3aed 50%, #5b21b6 100%) !important;
+  border: 2px solid var(--gold-medium) !important;
+  color: #ffffff !important;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  padding: 10px 0;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 
+    0 4px 15px rgba(124, 58, 237, 0.5), 
+    inset 0 0 10px rgba(255, 255, 255, 0.25);
+  width: 90%;
+  text-transform: uppercase;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  margin-top: auto;
+  text-shadow: 0 0 6px #ffffff;
+  /* Premium angled hexagon clip-path */
+  clip-path: polygon(6% 0%, 94% 0%, 100% 50%, 94% 100%, 6% 100%, 0% 50%);
+}
+
+.attack-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #6d28d9 0%, #8b5cf6 50%, #6d28d9 100%) !important;
+  border-color: var(--gold-light) !important;
+  box-shadow: 
+    0 0 25px rgba(139, 92, 246, 0.8), 
+    0 6px 20px rgba(0,0,0,0.8),
+    inset 0 0 12px rgba(255, 255, 255, 0.35) !important;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.attack-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Disabled state */
+.attack-btn:disabled {
+  background: linear-gradient(90deg, #333333 0%, #222222 50%, #333333 100%) !important;
+  border-color: #555555 !important;
+  color: #777777 !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
+  opacity: 0.65;
+  text-shadow: none !important;
+}
+
+/* ========================================================
+   Responsive Styling
+   ======================================================== */
+
+@media (max-width: 900px) {
+  .boss-battle-fullpage {
+    overflow-y: auto !important;
+  }
+  .boss-battle-content {
+    height: auto;
+    padding: 20px 16px;
+  }
+  .boss-arena-wide {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 40px;
+  }
+  .fighter-side {
+    order: 2;
+    margin-bottom: 20px;
+  }
+  .battle-center {
+    order: 1;
+    margin-bottom: 0;
+    width: 100%;
+  }
+  .fighter-img-lg {
+    height: 40vh;
+  }
+}
+:root {
+  --gold-light: #ffe3a0;
+  --gold-medium: #d4af37;
+  --gold-dark: #a88434;
+  --gold-shadow: rgba(168, 132, 52, 0.4);
+  
+  --bg-dark: #120d0a;
+  
+  --text-parchment: #e8d8be;
+  --text-muted: #a29580;
+  --text-gold-gradient: linear-gradient(to bottom, #fff4d0 20%, #d4af37 60%, #856122 100%);
+  
+  --red-btn-normal: linear-gradient(180deg, #991212 0%, #570606 100%);
+  --red-btn-hover: linear-gradient(180deg, #c01818 0%, #700a0a 100%);
+}
